@@ -1,4 +1,12 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
+  aws-ecr: circleci/aws-ecr@6.12.2 # Use the AWS ECR orb in your config
 workflows:
+  build_and_push_image:
+    jobs:
+      - aws-ecr/build-and-push-image: # Use the pre-defined `build-and-push-image` job
+          dockerfile: Dockerfile
+          path: app/
+          profile-name: harness
+          repo: harness
+          tag: latest # default - latest
