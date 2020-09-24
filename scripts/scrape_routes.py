@@ -62,7 +62,23 @@ def route_cleaner(route):
 def init():
     print('connecting to db')
     global connection
-    connection = psycopg2.connect(host='localhost', database='harness_dev')
+    if(len(sys.argv) == 3):
+        if(sys.argv[2] == "-local"):
+            connection = psycopg2.connect(
+                host='localhost', database='harness_dev')
+    else:
+        db_password = os.environ.get('DB_PASSWORD')
+        if(db_password == None):
+            print("ERROR: Must set DB_PASSWORD")
+            exit()
+
+        connection = psycopg2.connect(
+            host='harness.cqnluwlmobzi.us-east-2.rds.amazonaws.com',
+            database='harness',
+            user="postgres",
+            password=db_password
+        )
+
     print('db connected')
     global cursor
     cursor = connection.cursor()
@@ -99,11 +115,20 @@ def execute_batch(start, keys):
 def execute(batch_start, key):
     pid = os.fork()
     if(pid == 0):
+        err_log = open(f"error-{key[37: 42]}.log", "w")
         print(f"New Process Started: {pid} \t | \t Start ID: {batch_start}")
-        for _ in range(0, 10000):
-            fetch_range(batch_start, key)
+        for _ in range(0, 10):
+            try:
+                fetch_range(batch_start, key)
+            except:
+                err_log.write(
+                    f"FAILED: {batch_start} \t KEY: {key}" + os.linesep)
+                time.sleep(2)
+            finally:
+                pass
             batch_start = batch_start + 200
         print(f"Closing child process that ran from ID: {batch_start}")
+        err_log.close()
         os._exit(os.EX_OK)
     else:
         return pid

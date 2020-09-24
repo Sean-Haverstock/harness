@@ -1,0 +1,1 @@
+psql -d harness -a -f /Users/seanhaverstock/Projects/harness/db/database.sql -h harness.cqnluwlmobzi.us-east-2.rds.amazonaws.com -U postgres
