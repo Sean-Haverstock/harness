@@ -117,7 +117,7 @@ def execute(batch_start, key):
     if(pid == 0):
         err_log = open(f"error-{key[37: 42]}.log", "w")
         print(f"New Process Started: {pid} \t | \t Start ID: {batch_start}")
-        for _ in range(0, 10):
+        for _ in range(0, 10000):
             try:
                 fetch_range(batch_start, key)
             except:
