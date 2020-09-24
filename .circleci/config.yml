@@ -10,3 +10,4 @@ workflows:
           profile-name: harness
           repo: harness
           tag: latest # default - latest
+          attach-workspace: true
