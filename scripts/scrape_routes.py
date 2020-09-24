@@ -11,11 +11,11 @@ global second_batch
 global third_batch
 
 first_batch = [
-    "200923770-3c46583b18a399acb3766949606349f6",
-    "200923773-a3ab469e70c4d07a0bd4d5b7d8f9715e",
-    "",
-    "200923771-d01352b2c8eeb0de7fbc8431f4363167",
-    "200923772-dd41e36a8fb1dc5e09ca2c203cb6f835",
+    "200923781-0499d6ab55cfe4473f310f09ee8b7c8c",
+    # "200923773-a3ab469e70c4d07a0bd4d5b7d8f9715e",
+    # "200923775-66f700a9a5e779a2b239733dd23b776f",
+    # "200923771-d01352b2c8eeb0de7fbc8431f4363167",
+    # "200923772-dd41e36a8fb1dc5e09ca2c203cb6f835",
 ]
 
 second_batch = [
@@ -90,7 +90,7 @@ def main():
         exit()
     user_input = sys.argv[1]
     if(user_input == "one"):
-        execute_batch(105700000, first_batch)
+        execute_batch(106700000, first_batch)
     if(user_input == "two"):
         execute_batch(110700000, second_batch)
     if(user_input == "three"):
@@ -117,7 +117,7 @@ def execute(batch_start, key):
     if(pid == 0):
         err_log = open(f"error-{key[37: 42]}.log", "w")
         print(f"New Process Started: {pid} \t | \t Start ID: {batch_start}")
-        for _ in range(0, 10):
+        for _ in range(0, 10000):
             try:
                 fetch_range(batch_start, key)
             except:
@@ -144,9 +144,13 @@ def fetch_range(start_id, key):
 
     print(f"Making request for: \t{start_id} => {start_id + 200}")
     # fetch up to 200 routes
+    # proxies = {
+    #     https: "41.217.219.53:31398"
+    # }
     data = requests.get(
         f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={key}')
-
+    print("request sent")
+    print(data.json())
     routes = data.json()["routes"]
 
     # as long as object @ routes isn't an empty array, loop through routes array, run cleaner function, push each route to db
