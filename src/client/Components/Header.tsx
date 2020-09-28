@@ -27,7 +27,7 @@ export default function MenuAppBar() {
 
 	return (
 		<div className={classes.root}>
-			<AppBar className={classes.nav} position="static">
+			<AppBar position="static">
 				<Container maxWidth="lg">
 					<Toolbar>
 						<IconButton

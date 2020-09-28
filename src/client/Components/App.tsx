@@ -1,10 +1,11 @@
-import * as React from 'react';
-import Header from './Header';
+import React, { useEffect } from 'react';
+import Landing from './Landing';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import lama from '../../../public/assets/images/lama-lunag.jpg';
 import { url } from 'inspector';
 import Slider from './Slider';
+import axios from 'axios';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -15,23 +16,33 @@ const useStyles = makeStyles((theme: Theme) =>
 			margin: 'auto',
 			padding: 20,
 		},
-		header: {
-			backgroundImage: 'url(../../../public/assets/images/lama-lunag.jpg)',
-			height: 250,
-			backgroundRepeat: 'no-repeat',
-			backgroundSize: 'cover',
-			backgroundPosition: '0px -175px',
-		},
 	})
 );
 
 const App = () => {
 	const classes = useStyles();
+
+	useEffect(() => {
+		axios
+			.get('/api/climbs')
+			.then((res) => {
+				const routes = res.data.routes;
+				console.log(routes[0]);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		// .then(() => {
+		// 	console.log(climbs.length);
+		// });
+	}, []);
+
 	return (
 		<div>
-			<Header />
-			<div className={classes.header}></div>
-			<Slider />
+			<Landing />
+			<Container maxWidth="lg">
+				<Slider />
+			</Container>
 		</div>
 	);
 };
