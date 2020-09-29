@@ -1,13 +1,12 @@
 import React from 'react';
-import Header from './Header';
-import lama from '../../../public/assets/images/lunag-crop.jpg';
+import lama from '../../public/assets/images/lunag-crop.jpg';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
-
+import Slider from './Search';
 const useStyles = makeStyles(() =>
 	createStyles({
 		header: {
-			backgroundImage: 'url(../../../)',
+			backgroundImage: 'url(../../public/assets/images/lunag-crop.jpg)',
 			height: '100%',
 			width: '100%',
 			backgroundRepeat: 'no-repeat',
@@ -24,10 +23,10 @@ const Landing = () => {
 	const classes = useStyles();
 	return (
 		<div>
-			<Header />
-			<div>
-				<img src={lama} className={classes.header} />
-			</div>
+			<img src={lama} className={classes.header} />
+			<Container maxWidth="lg">
+				<Slider />
+			</Container>
 		</div>
 	);
 };

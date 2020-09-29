@@ -1,0 +1,2 @@
+connect to DB from terminal
+psql -h harness.cqnluwlmobzi.us-east-2.rds.amazonaws.com -p 5432 -U postgres harness -W

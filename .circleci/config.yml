@@ -6,7 +6,7 @@ workflows:
     jobs:
       - aws-ecr/build-and-push-image: # Use the pre-defined `build-and-push-image` job
           dockerfile: Dockerfile
-          path: app/
+          path: src/
           profile-name: harness
           repo: harness
           tag: latest # default - latest
