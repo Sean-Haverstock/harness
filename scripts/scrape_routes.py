@@ -144,6 +144,7 @@ def fetch_range(start_id):
     if(data.status_code != 200):
         # if we get an error from the api request, start using the next api key in our list
         api_keys_index = (api_keys_index + 1) % 5
+        return
     routes = data.json()["routes"]
 
     # as long as object @ routes isn't an empty array, loop through routes array, run cleaner function, push each route to db
