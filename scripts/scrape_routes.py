@@ -6,6 +6,8 @@ import os
 import time
 import random
 
+error_count = 0
+
 global keys
 
 keys = { 
@@ -113,6 +115,9 @@ def begin_scrape(batch_start):
                 f"FAILED: {batch_start} \t KEY: {api_keys[api_keys_index]}" + os.linesep + str(ex) + os.linesep
             )
             err_log.flush()
+            error_count = error_count + 1
+            if(error_count > 1000):
+                exit()
         finally:
             pass
         batch_start = batch_start + 200
