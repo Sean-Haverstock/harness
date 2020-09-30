@@ -173,8 +173,8 @@ def fetch_range(start_id):
         if(data.json()['message'] == "Rate Limit Exceeded"):
             # if we get rate limited, sleep for an hour
             print(data.json())
-            print("we got rate limited :( going to bed for an hour zZzZzZzZ")
-            time.sleep(60*60)
+            print("we got rate limited :( rotating api key")
+            api_keys_index = (api_keys_index + 1) % 5
             
         # print(data.json())
         # print(f"we got a bad response for PROXY: {proxy_address} \t\t API KEY: {api_keys[api_keys_index]}")
