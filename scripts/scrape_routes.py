@@ -140,7 +140,9 @@ def fetch_range(start_id):
     #     https: "41.217.219.53:31398"
     # }
     data = requests.get(
-        f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={api_keys[api_keys_index]}')
+        f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={api_keys[api_keys_index]}',
+        proxies={"https": "193.49.168.107:80"}
+        )
     print("request sent")
 
     if(data.status_code != 200):
