@@ -142,7 +142,16 @@ def fetch_range(start_id):
     data = requests.get(
         f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={api_keys[api_keys_index]}')
     print("request sent")
+    
     if(data.status_code != 200):
+        if(data.json()['message'] == "Rate Limit Exceeded"):
+            # if we get rate limited, sleep for an hour
+            time.sleep(60*60)
+        else:
+            # if failure was not a rate limit message, kill the process but log the api response
+            print(data.json())
+            exit()
+        
         # if we get an error from the api request, start using the next api key in our list
         api_keys_index = (api_keys_index + 1) % 5
         return
