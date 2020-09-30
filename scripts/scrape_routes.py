@@ -34,9 +34,9 @@ keys = {
 }
 
 start_ids = {
-    "one": 106700000,
-    "two": 110700000,
-    "three": 115700000,
+    "one": 106847600,
+    "two": 110859600,
+    "three": 115746000,
     }
 
 # helper function to sanitize route object and set defaults
