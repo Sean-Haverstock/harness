@@ -6,32 +6,36 @@ import os
 import time
 import random
 
-global first_batch
-global second_batch
-global third_batch
+global keys
 
-first_batch = [
-    "200923781-0499d6ab55cfe4473f310f09ee8b7c8c",
-    # "200923773-a3ab469e70c4d07a0bd4d5b7d8f9715e",
-    # "200923775-66f700a9a5e779a2b239733dd23b776f",
-    # "200923771-d01352b2c8eeb0de7fbc8431f4363167",
-    # "200923772-dd41e36a8fb1dc5e09ca2c203cb6f835",
-]
+keys = { 
+    "one": [
+        "200923781-0499d6ab55cfe4473f310f09ee8b7c8c",
+        "200923773-a3ab469e70c4d07a0bd4d5b7d8f9715e",
+        "200923775-66f700a9a5e779a2b239733dd23b776f",
+        "200923771-d01352b2c8eeb0de7fbc8431f4363167",
+        "200923772-dd41e36a8fb1dc5e09ca2c203cb6f835",
+    ],
+    "two": [
+        "200923469-d634ec8b0a38749550a52e91e243081d",
+        "200923472-b57d689fe61d2de7180e71aa01d0d4ec",
+        "200923474-379c42c4a5edfffd7ebaa8c7f613ed8d",
+        "200923476-bb226291b3870cbf08bb5cea3cec8c25",
+        "200923471-1202e131ddfb7a48a495d944a457fafa",
+    ],
+    "three": [
+        "200923459-533ee9a24d888b82ace409a4ab20e405",
+        "200923458-2ef04c5df07b1ffe724af72420b9c2ac",
+        "200923468-30518c827b21e3c213cf53ad57137180",
+        "200923473-5fee3f7ae2918816635e15924ac992c4",
+    ]
+}
 
-second_batch = [
-    "200923469-d634ec8b0a38749550a52e91e243081d",
-    "200923472-b57d689fe61d2de7180e71aa01d0d4ec",
-    "200923474-379c42c4a5edfffd7ebaa8c7f613ed8d",
-    "200923476-bb226291b3870cbf08bb5cea3cec8c25",
-    "200923471-1202e131ddfb7a48a495d944a457fafa",
-]
-
-third_batch = [
-    "200923459-533ee9a24d888b82ace409a4ab20e405",
-    "200923458-2ef04c5df07b1ffe724af72420b9c2ac",
-    "200923468-30518c827b21e3c213cf53ad57137180",
-    "200923473-5fee3f7ae2918816635e15924ac992c4",
-]
+start_ids = {
+    "one": 106700000,
+    "two": 110700000,
+    "three": 115700000,
+    }
 
 # helper function to sanitize route object and set defaults
 
@@ -56,10 +60,12 @@ def route_cleaner(route):
             route[key] = val
         else:
             route[key] = vals[key][1]
+    if(len(route["rating"]) > 10):
+        route["rating"] = ""
     return route
 
 
-def init():
+def init_db():
     print('connecting to db')
     global connection
     if(len(sys.argv) == 3):
@@ -85,56 +91,39 @@ def init():
 
 
 def main():
+    init_db()
     if (len(sys.argv) < 2):
         print("ERROR: Must provide batch value")
         exit()
     user_input = sys.argv[1]
-    if(user_input == "one"):
-        execute_batch(106700000, first_batch)
-    if(user_input == "two"):
-        execute_batch(110700000, second_batch)
-    if(user_input == "three"):
-        execute_batch(115700000, third_batch)
+
+    global api_keys
+    global api_keys_index
+    api_keys_index = 0
+
+    api_keys = keys[user_input]
+    first_route = start_ids[user_input]
+    begin_scrape(first_route)
 
 
-def execute_batch(start, keys):
-    # script for getting routes
-    # make request for route
-    # our best guess at starting id
-    i = 0
-    child_pids = []
-    for key in keys:
-        batch_start = start + i
-        child_pid = execute(batch_start, key)
-        child_pids.append(child_pid)
-        i = i + 1000000
-    for pid in child_pids:
-        os.waitpid(pid, 0)
+def begin_scrape(batch_start):
+    err_log = open(f"error.log", "w")
+    for _ in range(0, 25000):
+        try:
+            fetch_range(batch_start)
+        except Exception as ex:
+            err_log.write(
+                f"FAILED: {batch_start} \t KEY: {api_keys[api_keys_index]}" + os.linesep + str(ex) + os.linesep
+            )
+            err_log.flush()
+        finally:
+            pass
+        batch_start = batch_start + 200
+    err_log.close()
 
 
-def execute(batch_start, key):
-    pid = os.fork()
-    if(pid == 0):
-        err_log = open(f"error-{key[37: 42]}.log", "w")
-        print(f"New Process Started: {pid} \t | \t Start ID: {batch_start}")
-        for _ in range(0, 10000):
-            try:
-                fetch_range(batch_start, key)
-            except:
-                err_log.write(
-                    f"FAILED: {batch_start} \t KEY: {key}" + os.linesep)
-                time.sleep(2)
-            finally:
-                pass
-            batch_start = batch_start + 200
-        print(f"Closing child process that ran from ID: {batch_start}")
-        err_log.close()
-        os._exit(os.EX_OK)
-    else:
-        return pid
-
-
-def fetch_range(start_id, key):
+def fetch_range(start_id):
+    global api_keys_index
     # create comma delimited string for query
     ids = f'{start_id}'
     # add 200 ids (max request size for mp API) to ids string
@@ -148,9 +137,11 @@ def fetch_range(start_id, key):
     #     https: "41.217.219.53:31398"
     # }
     data = requests.get(
-        f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={key}')
+        f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={api_keys[api_keys_index]}')
     print("request sent")
-    print(data.json())
+    if(data.status_code != 200):
+        # if we get an error from the api request, start using the next api key in our list
+        api_keys_index = (api_keys_index + 1) % 5
     routes = data.json()["routes"]
 
     # as long as object @ routes isn't an empty array, loop through routes array, run cleaner function, push each route to db
@@ -168,9 +159,6 @@ def fetch_range(start_id, key):
     connection.commit()
     print(f"Committed {len(routes)} records")
 
-
-print("Initializing...")
-init()
 print("Successfully initialized")
 print("Executing program")
 main()
