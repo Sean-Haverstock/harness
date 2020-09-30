@@ -5,6 +5,10 @@ import sys
 import os
 import time
 import random
+import re
+
+proxies = []
+proxies_index = 0
 
 error_count = 0
 
@@ -34,7 +38,7 @@ keys = {
 }
 
 start_ids = {
-    "one": 106847600,
+    "one": 106849000,
     "two": 110859600,
     "three": 115746000,
     }
@@ -66,6 +70,14 @@ def route_cleaner(route):
         route["rating"] = ""
     return route
 
+# def init_proxies():
+#     global proxies
+#     url = 'https://free-proxy-list.net/'
+#     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Cafari/537.36'}
+#     source = str(requests.get(url, headers=headers, timeout=10).text)
+#     data = [list(filter(None, i))[0] for i in re.findall('<td class="hm">(.*?)</td>|<td>(.*?)</td>|<td class="hx">yes</td>', source)]
+#     groupings = [dict(zip(['ip', 'port', 'code', 'using_anonymous'], data[i:i+4])) for i in range(0, len(data), 4)]
+#     proxies = ["{ip}:{port}".format(**i) for i in groupings][0:100]
 
 def init_db():
     print('connecting to db')
@@ -91,6 +103,8 @@ def init_db():
 
 def main():
     init_db()
+    # init_proxies()
+
     if (len(sys.argv) < 2):
         print("ERROR: Must provide batch value")
         exit()
@@ -106,27 +120,35 @@ def main():
 
 
 def begin_scrape(batch_start):
-    global error_count
+    global error_count, proxies_index, api_keys_index
     err_log = open(f"error.log", "w")
     for _ in range(0, 25000):
         try:
             fetch_range(batch_start)
+            batch_start = batch_start + 200
+        # except requests.Timeout as ex:
+        #     print("PROXY timeout, rotating to next proxy!")
+        #     proxies_index = (proxies_index + 1) % 100
         except Exception as ex:
             err_log.write(
-                f"FAILED: {batch_start} \t KEY: {api_keys[api_keys_index]}" + os.linesep + str(ex) + os.linesep
+                f"FAILED: {batch_start} \t KEY: {api_keys[api_keys_index]}" + os.linesep + str(ex) + os.linesep + str(sys.exc_info())
             )
             err_log.flush()
             error_count = error_count + 1
+            api_keys_index = (api_keys_index + 1) % 5
             if(error_count > 1000):
                 exit()
         finally:
             pass
-        batch_start = batch_start + 200
     err_log.close()
 
 
 def fetch_range(start_id):
     global api_keys_index
+    # global proxies_index
+
+    # proxy_address = proxies[proxies_index]
+
     # create comma delimited string for query
     ids = f'{start_id}'
     # add 200 ids (max request size for mp API) to ids string
@@ -139,9 +161,11 @@ def fetch_range(start_id):
     # proxies = {
     #     https: "41.217.219.53:31398"
     # }
+    
     data = requests.get(
         f'https://www.mountainproject.com/data/get-routes?routeIds={ids}&key={api_keys[api_keys_index]}',
-        proxies={"https": "193.49.168.107:80"}
+        # proxies={"https": proxy_address},
+        timeout=4
         )
     print("request sent")
 
@@ -151,13 +175,12 @@ def fetch_range(start_id):
             print(data.json())
             print("we got rate limited :( going to bed for an hour zZzZzZzZ")
             time.sleep(60*60)
-        else:
-            # if failure was not a rate limit message, kill the process but log the api response
-            print(data.json())
-            exit()
-        
-        # if we get an error from the api request, start using the next api key in our list
-        api_keys_index = (api_keys_index + 1) % 5
+            
+        # print(data.json())
+        # print(f"we got a bad response for PROXY: {proxy_address} \t\t API KEY: {api_keys[api_keys_index]}")
+        # proxies_index = (proxies_index + 1) % 100
+        # # if we get an error from the api request, start using the next api key in our list
+        # api_keys_index = (api_keys_index + 1) % 5
         return
     routes = data.json()["routes"]
 
