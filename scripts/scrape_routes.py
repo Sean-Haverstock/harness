@@ -106,6 +106,7 @@ def main():
 
 
 def begin_scrape(batch_start):
+    global error_count
     err_log = open(f"error.log", "w")
     for _ in range(0, 25000):
         try:
