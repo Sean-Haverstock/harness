@@ -86,9 +86,6 @@ def init_db():
         )
 
     print('db connected')
-    global cursor
-    cursor = connection.cursor()
-
 
 def main():
     init_db()
@@ -150,9 +147,10 @@ def fetch_range(start_id):
 
         for route in routes:
             route = route_cleaner(route)
+            cursor = connection.cursor()            
             cursor.execute('INSERT INTO routes (mp_id, name, type, rating, stars, starVotes, pitches, url, longitude, latitude, raw) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
                            (route["id"], route["name"], route["type"], route["rating"], route["stars"], route["starVotes"], route["pitches"], route["url"], route["longitude"], route["latitude"], json.dumps(route)))
-        # print(data.elapsed.total_seconds())
+            cursor.close()
     else:
         print(f'NOT FOUND: {start_id}')
     # save to db
