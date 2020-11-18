@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,66 +9,90 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@material-ui/core/Container';
 import { BrowserRouter as Link } from 'react-router-dom';
 import { Link as NavLink } from '@material-ui/core';
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			flexGrow: 1,
+import { spacing } from '@material-ui/system';
+import theme from '../UI/theme';
+
+const useStyles = makeStyles({
+	root: {
+		flexGrow: 1,
+	},
+	toolbar: {
+		display: 'flex',
+		alignItems: 'flex-end',
+		minHeight: 128,
+		backgroundColor: '#fff',
+		borderBottom: '8px solid #2962ff',
+	},
+	links: {
+		justifyContent: 'center',
+		paddingRight: theme.spacing(2),
+		'&:hover': {
+			borderTop: '2px solid #2962ff',
+			backgroundColor: '#E3F2FD',
 		},
-		menuButton: {
-			marginRight: theme.spacing(2),
-		},
-		title: {
-			flexGrow: 1,
-		},
-	})
-);
+	},
+	login: {
+		marginLeft: 'auto',
+	},
+});
 
 export default function NavBar() {
 	const classes = useStyles();
-
+	const theme = useTheme();
+	console.log('theme', theme);
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
-				<Container maxWidth="lg">
-					<Toolbar variant="regular">
-						<IconButton
-							edge="start"
-							className={classes.menuButton}
-							color="inherit"
-							aria-label="menu"
-						>
-							<MenuIcon />
-						</IconButton>
-						<Link to="/">
-							<Typography variant="h6" className={classes.title}>
-								<NavLink color="inherit" href="/">
-									Home
-								</NavLink>
-							</Typography>
-						</Link>
-						<Link to="/map">
-							<Typography variant="h6" className={classes.title}>
-								<NavLink color="inherit" href="/map">
-									Map
-								</NavLink>
-							</Typography>
-						</Link>
-
-						{/* <Link to="/login">
-							<Typography variant="h6" className={classes.title}>
-								<NavLink color="inherit" href="/login">
-									Login
-								</NavLink>
-							</Typography>
-						</Link> */}
-
-						<Link to="/login">
-							<NavLink color="inherit" href="/login">
-								<Button color="inherit">Login</Button>
+				<Toolbar className={classes.toolbar} variant="regular">
+					<Link to="/">
+						<Typography align="right" variant="h6">
+							<NavLink
+								underline="none"
+								className={classes.links}
+								color="primary"
+								href="/"
+							>
+								Home
 							</NavLink>
-						</Link>
-					</Toolbar>
-				</Container>
+						</Typography>
+					</Link>
+					<Link to="/map">
+						<Typography align="center" variant="h6">
+							<NavLink
+								underline="none"
+								className={classes.links}
+								color="primary"
+								href="/map"
+							>
+								Map
+							</NavLink>
+						</Typography>
+					</Link>
+
+					<Link to="/search">
+						<Typography color="primary" align="center" variant="h6">
+							<NavLink
+								underline="none"
+								className={classes.links}
+								color="primary"
+								href="/search"
+							>
+								Search
+							</NavLink>
+						</Typography>
+					</Link>
+
+					<Link to="/login">
+						<NavLink
+							className={classes.login}
+							underline="none"
+							color="primary"
+							href="/login"
+						>
+							<Button color="primary">Login</Button>
+						</NavLink>
+					</Link>
+				</Toolbar>
 			</AppBar>
 		</div>
 	);

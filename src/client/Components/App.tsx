@@ -6,36 +6,25 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { url } from 'inspector';
 import Search from './Search';
-import axios from 'axios';
-import { Container } from '@material-ui/core';
+import { Container, ThemeProvider } from '@material-ui/core';
 import Login from './Login';
-import Map from './Map';
-
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		nav: {
-			background: 'black',
-			height: 500,
-			width: 500,
-			margin: 'auto',
-			padding: 20,
-		},
-	})
-);
+import MapPage from './MapPage';
+import AppBar from '@material-ui/core/AppBar';
+import theme from '../UI/theme';
 
 const App = () => {
-	const classes = useStyles();
-
 	return (
 		<Router>
 			<div>
-				<Navbar />
-				<Switch>
-					<Route exact path="/" component={Landing} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/map" component={Map} />
-					<Route exact path="/slider" component={Search} />/
-				</Switch>
+				<ThemeProvider theme={theme}>
+					<Navbar />
+					<Switch>
+						<Route exact path="/" component={Landing} />
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/map" component={MapPage} />
+						<Route exact path="/search" component={Search} />/
+					</Switch>
+				</ThemeProvider>
 			</div>
 		</Router>
 	);
