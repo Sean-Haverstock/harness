@@ -1,8 +1,5 @@
 import React from 'react';
-//import lama from '../../public/assets/images/lunag-crop.jpg';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
-import Slider from './Slider';
 
 const useStyles = makeStyles(() =>
 	createStyles({

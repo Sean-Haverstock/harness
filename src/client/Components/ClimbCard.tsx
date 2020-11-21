@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       maxWidth: 345,
+      backgroundColor: '#f7f7f7',
     },
     media: {
       height: 0,
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function ClimbCard ({ key, name, img, cssType, type, rating, stars }) {
+function ClimbCard ({ name, img, cssType, type, rating, stars }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
@@ -55,7 +56,7 @@ function ClimbCard ({ key, name, img, cssType, type, rating, stars }) {
   };
 
   return (
-    <Card key={key} className={classes.root}>
+    <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.T}>

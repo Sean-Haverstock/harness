@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
 	root: {
-		marginTop: 10,
+		margin: 40,
 		height: 20,
 		display: 'flex',
 		alignItems: 'center',
@@ -42,11 +42,12 @@ export default function VerticalSlider() {
 
 	return (
 		<React.Fragment>
+		
+
+			<div className={classes.root}>
 			<Typography id="horizontal-slider" gutterBottom>
 				Select Grade
 			</Typography>
-
-			<div className={classes.root}>
 				<Slider
 					aria-label="slider"
 					orientation="horizontal"

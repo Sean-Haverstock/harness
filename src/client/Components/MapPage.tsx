@@ -6,7 +6,8 @@ const mapStyles = {
   height: '100%'
 };
 
-const maps_api_key = process.env.MAPS_API_KEY
+const maps_api_key = process.env.REACT_APP_MAPS_API_KEY
+console.log("API KEY", process.env.NODE_ENV)
 
 export class MapContainer extends Component {
   render() {
@@ -27,5 +28,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.MAPS_API_KEY
+  apiKey: maps_api_key
 })(MapContainer);

@@ -15,8 +15,13 @@ import theme from '../UI/theme';
 const useStyles = makeStyles({
 	root: {
 		flexGrow: 1,
+		marginBottom: '20px'
 	},
-	toolbar: {
+	appBar: {
+		boxShadow: "0 4px 2px -2px gray",
+		// backgroundImage: "src/public/assets/images/lunag-crop.jpg",
+	},
+	toolBar: {
 		display: 'flex',
 		alignItems: 'flex-end',
 		minHeight: 128,
@@ -24,12 +29,16 @@ const useStyles = makeStyles({
 		borderBottom: '8px solid #2962ff',
 	},
 	links: {
-		justifyContent: 'center',
-		paddingRight: theme.spacing(2),
+		justifyContent: 'right',
+		marginRight: theme.spacing(2),
 		'&:hover': {
 			borderTop: '2px solid #2962ff',
-			backgroundColor: '#E3F2FD',
+			// backgroundColor: '#E3F2FD',
 		},
+		// '&:active': {
+		// 	borderTop: '2px solid #2962ff',
+		// 	// backgroundColor: '#E3F2FD',
+		// },
 	},
 	login: {
 		marginLeft: 'auto',
@@ -42,8 +51,8 @@ export default function NavBar() {
 	console.log('theme', theme);
 	return (
 		<div className={classes.root}>
-			<AppBar position="static">
-				<Toolbar className={classes.toolbar} variant="regular">
+			<AppBar className={classes.appBar} position="static">
+				<Toolbar className={classes.toolBar} variant="regular">
 					<Link to="/">
 						<Typography align="right" variant="h6">
 							<NavLink
