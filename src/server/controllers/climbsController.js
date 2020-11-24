@@ -4,7 +4,7 @@ const climbsController = {};
 
 climbsController.getClimbs = (req, res, next) => {
 	console.log('in climb controller');
-	const queryText = 'SELECT * FROM routes LIMIT 10;';
+	const queryText = 'SELECT * FROM routes LIMIT 20;';
 
 	db.query(queryText, (err, results) => {
 		if (err) {

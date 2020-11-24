@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
 
-
 const useStyles = makeStyles({
 	root: {
 		margin: 40,
@@ -26,7 +25,7 @@ export default function VerticalSlider() {
 	// 	setValue(newValue);
 	// };
 
-	function labeltext(index: number) {
+	function labeltext(index) {
 		// console.log('index: ', index);
 		// console.log(marks[index].label);
 		return `${marks[index].label}`;
@@ -42,12 +41,10 @@ export default function VerticalSlider() {
 
 	return (
 		<React.Fragment>
-		
-
 			<div className={classes.root}>
-			<Typography id="horizontal-slider" gutterBottom>
-				Select Grade
-			</Typography>
+				<Typography id="horizontal-slider" gutterBottom>
+					Select Grade
+				</Typography>
 				<Slider
 					aria-label="slider"
 					orientation="horizontal"

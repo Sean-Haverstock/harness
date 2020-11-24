@@ -8,7 +8,7 @@ import { url } from 'inspector';
 import Search from './Search';
 import { Container, ThemeProvider } from '@material-ui/core';
 import Login from './Login';
-import MapPage from './MapPage';
+import MapPage from './LocationMap';
 import AppBar from '@material-ui/core/AppBar';
 import theme from '../UI/theme';
 

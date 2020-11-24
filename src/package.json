@@ -17,6 +17,7 @@
 		"@material-ui/icons": "^4.9.1",
 		"@types/react": "^16.8.16",
 		"@types/react-dom": "^16.8.4",
+		"@types/google-maps-react": "2.0.5",
 		"axios": "^0.20.0",
 		"babel-polyfill": "^6.26.0",
 		"body-parser": "^1.19.0",
