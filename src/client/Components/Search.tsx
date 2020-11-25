@@ -2,14 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Grid, Container } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import ClimbCard from './ClimbCard';
+import ClimbsDisplay from './ClimbsDisplay';
 import Slider from './Slider';
 // import theme from '../UI/theme';
 
 import MapWrapper from './LocationMap';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-	
+	buttonContainer: {
+		display: 'flex',
+		flexDirection: 'row-reverse',
+	},
+	buttons: {
+		padding: '5px',
+		marginRight: '10px',
+	}
 }));
 
 function Search() {
@@ -34,48 +41,27 @@ function Search() {
 		console.log('VALUE', e.target.value);
 		e.target.value === 'list' ? setView(true) : setView(false);
 	};
-
-	const climbs = routes
-		.filter((route) => {
-			return route.raw.imgMedium !== '';
-		})
-		.map((climb) => {
-			console.log('climb', climb.id);
-			let type;
-			if (climb.type === 'Sport') type = 'S';
-			else if (climb.type === 'Trad' || 'Trad, TR') type = 'T';
-			else if (climb.type === 'Boulder') type = 'B';
-
-			return (
-				<Grid key={climb.id} item xs={12} sm={6} md={4}>
-					<ClimbCard
-						key={climb.id}
-						name={climb.name}
-						img={climb.raw.imgMedium}
-						cssType={type}
-						type={climb.type}
-						rating={climb.rating}
-						stars={climb.stars}
-					/>
-				</Grid>
-			);
-		});
-	console.log(climbs);
-
+	
 	return (
 		<div>
 			<Slider></Slider>
-			<button type="submit" value="list" onClick={handleViewChange}>
-				List View
-			</button>
-			<button type="submit" value="map" onClick={handleViewChange}>
-				Map View
-			</button>
+		<label for="type">Type:</label>	
+			<select id="type" name="type">
+				<option value="Trad">Trad</option>
+				<option value="Sport">Sport</option>
+				<option value="Boulder">Boulder</option>
+				<option value="All">All</option>
+		</select>
+			<div className={classes.buttonContainer}>
+				<button className={classes.buttons} type="submit" value="list" onClick={handleViewChange}>
+					List View
+				</button>
+				<button className={classes.buttons} type="submit" value="map" onClick={handleViewChange}>
+					Map View
+				</button>
+			</div>
 			<Container>
-				<Grid container spacing={2}>
-					{isListView ? climbs : <MapWrapper />}
-					{/* {climbs} */}
-				</Grid>
+				{isListView ? <ClimbsDisplay routes={routes}/> : <MapWrapper routes={routes}/>}
 			</Container>
 		</div>
 	);
