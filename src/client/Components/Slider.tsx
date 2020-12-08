@@ -26,8 +26,8 @@ export default function VerticalSlider() {
 	// };
 
 	function labeltext(index) {
-		// console.log('index: ', index);
-		// console.log(marks[index].label);
+		console.log('index: ', index);
+		console.log(marks[index].label);
 		return `${marks[index].label}`;
 	}
 
@@ -48,12 +48,12 @@ export default function VerticalSlider() {
 				<Slider
 					aria-label="slider"
 					orientation="horizontal"
-					defaultValue={[0, 100]}
+					defaultValue={[8, 24]}
 					aria-labelledby="horizontal-slider"
 					// aria-valuetext="test"
 					getAriaLabel={labeltext}
 					step={4}
-					marks={true}
+					marks={marks}
 					valueLabelDisplay="auto"
 					onChange={handleChange}
 				/>

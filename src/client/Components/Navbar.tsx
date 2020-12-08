@@ -1,15 +1,12 @@
 import React from 'react';
-import { createMuiTheme, makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Container from '@material-ui/core/Container';
 import { BrowserRouter as Link } from 'react-router-dom';
 import { Link as NavLink } from '@material-ui/core';
-import { spacing } from '@material-ui/system';
+
 import theme from '../UI/theme';
 
 const useStyles = makeStyles({
@@ -19,7 +16,7 @@ const useStyles = makeStyles({
 	},
 	appBar: {
 		boxShadow: "0 4px 2px -2px gray",
-		// backgroundImage: "src/public/assets/images/lunag-crop.jpg",
+		backgroundImage: "src/public/assets/images/lunag-crop.jpg",
 	},
 	toolBar: {
 		display: 'flex',
@@ -65,7 +62,7 @@ export default function NavBar() {
 							</NavLink>
 						</Typography>
 					</Link>
-					<Link to="/map">
+					{/* <Link to="/map">
 						<Typography align="center" variant="h6">
 							<NavLink
 								underline="none"
@@ -76,7 +73,7 @@ export default function NavBar() {
 								Map
 							</NavLink>
 						</Typography>
-					</Link>
+					</Link> */}
 
 					<Link to="/search">
 						<Typography color="primary" align="center" variant="h6">

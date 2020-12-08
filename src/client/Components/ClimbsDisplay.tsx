@@ -1,16 +1,14 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
 import ClimbCard from './ClimbCard';
 
 
 function ClimbsDisplay(props) {
-  console.log("PROPS", props)
 	const climbs = props.routes.filter((route) => {
 			return route.raw.imgMedium !== '';
 		})
 		.map((climb) => {
-			console.log('climb', climb.id);
 			let type;
 			if (climb.type === 'Sport') type = 'S';
 			else if (climb.type === 'Trad' || 'Trad, TR') type = 'T';
@@ -29,7 +27,7 @@ function ClimbsDisplay(props) {
 				</Grid>
       )
     });
-    console.log("CLIMBS", climbs);
+
     return (
       <Grid container spacing={2}>
         {climbs}

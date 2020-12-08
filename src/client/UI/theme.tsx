@@ -10,7 +10,7 @@ const theme = createMuiTheme({
 		},
 	},
 	typography: {
-		fontFamily: 'Lato',
+		fontFamily: 'Roboto',
 		fontWeightLight: 300,
 	},
 });

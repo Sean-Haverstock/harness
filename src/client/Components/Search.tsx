@@ -1,27 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Grid, Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ClimbsDisplay from './ClimbsDisplay';
-import Slider from './Slider';
-// import theme from '../UI/theme';
-
 import MapWrapper from './LocationMap';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-	buttonContainer: {
-		display: 'flex',
-		flexDirection: 'row-reverse',
-	},
-	buttons: {
-		padding: '5px',
-		marginRight: '10px',
-	}
-}));
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		header: {
+			margin: '10px',
+		},
+		buttonContainer: {
+			display: 'flex',
+			flexWrap: 'wrap',
+		},
+		buttons: {
+			alignSelf: 'flex-end',
+			padding: '5px',
+			margin: '10px',
+		},
+		fields: {
+			marginLeft: '15px',
+		},
+	})
+);
 
 function Search() {
 	const [routes, setRoutes] = useState([]);
 	const [isListView, setView] = useState(true);
+	const [grade, setGrade] = useState('5.6');
+	const [type, setType] = useState('');
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -38,30 +47,139 @@ function Search() {
 
 	const handleViewChange = (e) => {
 		e.preventDefault();
-		console.log('VALUE', e.target.value);
 		e.target.value === 'list' ? setView(true) : setView(false);
 	};
-	
+
+	function handleTypeSelection(e) {
+		e.preventDefault();
+		setType(e.target.value);
+	}
+
+	function handleGradeSelection(e) {
+		e.preventDefault();
+		setGrade(e.target.value);
+	}
+
+	function handleFindClimbs(e) {
+		e.preventDefault();
+		console.log('GRADE', grade);
+		axios
+			.get(`/api/climbs/search`, {
+				params: {
+					type: type,
+					grade: grade,
+				},
+			})
+			.then((res) => {
+				let data = res.data.routes;
+				setRoutes(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
 	return (
 		<div>
-			<Slider></Slider>
-		<label for="type">Type:</label>	
-			<select id="type" name="type">
-				<option value="Trad">Trad</option>
-				<option value="Sport">Sport</option>
-				<option value="Boulder">Boulder</option>
-				<option value="All">All</option>
-		</select>
-			<div className={classes.buttonContainer}>
-				<button className={classes.buttons} type="submit" value="list" onClick={handleViewChange}>
-					List View
-				</button>
-				<button className={classes.buttons} type="submit" value="map" onClick={handleViewChange}>
-					Map View
-				</button>
-			</div>
+			<Typography variant="h4" className={classes.header}>
+				Explore America's Climbing Routes
+			</Typography>
+				<form>
+					<label className={classes.fields} for="type">
+						<Typography display="inline">Type:</Typography>
+					</label>
+
+					<input
+						className={classes.fields}
+						type="radio"
+						id="Trad"
+						name="type"
+						value="Trad"
+						onChange={handleTypeSelection}
+					/>
+					<label for="Trad">
+						<Typography display="inline">Trad</Typography>
+					</label>
+
+					<input
+						className={classes.fields}
+						type="radio"
+						id="Sport"
+						name="type"
+						value="Sport"
+						onChange={handleTypeSelection}
+					/>
+					<label for="Sport">
+						<Typography display="inline">Sport</Typography>
+					</label>
+
+					{/* <input className={classes.fields} type="radio" id="Boulder" name="type" value="Boulder" onChange={handleTypeSelection} />
+						<label for="Boulder"><Typography display='inline'>Boulder</Typography></label> */}
+
+					<label className={classes.fields} for="grade">
+						<Typography display="inline">Grade:</Typography>
+					</label>
+					<select
+						className={classes.fields}
+						id="grade"
+						name="type"
+						onChange={handleGradeSelection}
+					>
+						<option value="5.6">5.6</option>
+						<option value="5.7">5.7</option>
+						<option value="5.8">5.8</option>
+						<option value="5.9">5.9</option>
+						<option value="5.10a">5.10a</option>
+						<option value="5.10b">5.10b</option>
+						<option value="5.10c">5.10c</option>
+						<option value="5.10d">5.10d</option>
+						<option value="5.11a">5.11a</option>
+						<option value="5.11b">5.11b</option>
+						<option value="5.11c">5.11c</option>
+						<option value="5.11d">5.11d</option>
+						<option value="5.12a">5.12a</option>
+						<option value="5.12b">5.12b</option>
+						<option value="5.12c">5.12c</option>
+						<option value="5.12d">5.12d</option>
+						<option value="5.13a">5.13a</option>
+						<option value="5.13b">5.13b</option>
+						<option value="5.13c">5.13c</option>
+						<option value="5.13d">5.13d</option>
+						<option value="5.14a">5.14a</option>
+						<option value="5.14b">5.14b</option>
+						<option value="5.14c">5.14c</option>
+						<option value="5.14d">5.14d</option>
+					</select>
+
+					<button type="submit" className={classes.fields} onClick={handleFindClimbs}>
+						Find!
+					</button>
+				</form>
+				<div className={classes.buttonContainer}>
+					<button
+						className={classes.buttons}
+						type="submit"
+						value="list"
+						onClick={handleViewChange}
+					>
+						List View
+					</button>
+					<button
+						className={classes.buttons}
+						type="submit"
+						value="map"
+						onClick={handleViewChange}
+					>
+						Map View
+					</button>
+				</div>
+		
 			<Container>
-				{isListView ? <ClimbsDisplay routes={routes}/> : <MapWrapper routes={routes}/>}
+				{isListView ? (
+					<ClimbsDisplay routes={routes} />
+				) : (
+					<MapWrapper routes={routes} />
+				)}
 			</Container>
 		</div>
 	);
