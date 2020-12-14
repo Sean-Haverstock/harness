@@ -10,10 +10,9 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { green, red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import cx from 'classnames'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,17 +62,17 @@ function ClimbCard ({ name, img, cssType, type, rating, stars }) {
             {cssType}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={name}
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
+        title='hello'
       />
       <CardMedia
         className={classes.media}
         image={img}
-        title="Paella dish"
+        title={name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -88,7 +87,7 @@ function ClimbCard ({ name, img, cssType, type, rating, stars }) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteBorderIcon />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

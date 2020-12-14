@@ -3,14 +3,14 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			main: '#2962ff',
-			light: '#768fff',
-			dark: '#0039cb',
+			main: '#01579B',
+			light: '#4f83cc',
+			dark: '#002f6c',
 			contrastText: '#fff',
 		},
 	},
 	typography: {
-		fontFamily: 'Roboto',
+		fontFamily: `'Roboto', 'Permanent Marker', 'Pacifico', 'Dancing Script', 'cursive',`,
 		fontWeightLight: 300,
 	},
 });

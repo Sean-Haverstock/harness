@@ -8,8 +8,17 @@ import MapWrapper from './LocationMap';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
+		mainContainer: {
+		},
 		header: {
-			margin: '10px',
+			margin: 'auto',
+			maxWidth: '1200px',
+			padding: '20px',
+		},
+		formContainer: {
+			margin: 'auto',
+			maxWidth: '1200px',
+			padding: '20px',
 		},
 		buttonContainer: {
 			display: 'flex',
@@ -80,10 +89,13 @@ function Search() {
 	}
 
 	return (
-		<div>
-			<Typography variant="h4" className={classes.header}>
-				Explore America's Climbing Routes
-			</Typography>
+		<div className={classes.mainContainer}>
+			<header className={classes.header}>
+				<Typography variant="h4">
+					Explore America's Climbing Routes
+				</Typography>
+			</header>
+			<div className={classes.formContainer}>
 				<form>
 					<label className={classes.fields} for="type">
 						<Typography display="inline">Type:</Typography>
@@ -115,7 +127,7 @@ function Search() {
 
 					{/* <input className={classes.fields} type="radio" id="Boulder" name="type" value="Boulder" onChange={handleTypeSelection} />
 						<label for="Boulder"><Typography display='inline'>Boulder</Typography></label> */}
-
+					
 					<label className={classes.fields} for="grade">
 						<Typography display="inline">Grade:</Typography>
 					</label>
@@ -152,7 +164,7 @@ function Search() {
 					</select>
 
 					<button type="submit" className={classes.fields} onClick={handleFindClimbs}>
-						Find!
+						Search!
 					</button>
 				</form>
 				<div className={classes.buttonContainer}>
@@ -173,7 +185,7 @@ function Search() {
 						Map View
 					</button>
 				</div>
-		
+				</div>		
 			<Container>
 				{isListView ? (
 					<ClimbsDisplay routes={routes} />
