@@ -5,4 +5,3 @@ dist
 *.log
 yarn.lock
 .env
-assets/
