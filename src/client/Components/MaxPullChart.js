@@ -1,29 +1,39 @@
-import React from 'react';
-import Chart from 'chart.js';
+/* eslint-disable no-tabs */
+import React, { Fragment } from 'react';
+import { Doughnut } from 'react-chartjs-2';
 
-const data = {
+const state = {
+	labels: ['Max Pull lbs.', 'Remaining bodyweight'],
 	datasets: [
 		{
-			data: [10, 20, 30],
+			label: 'Weight in lbs.',
+			backgroundColor: ['#009624', '#9b0000'],
+			hoverBackgroundColor: ['#64dd17', '#d50000'],
+			data: [131, 24],
 		},
 	],
-
-	// These labels appear in the legend and in the tooltips when hovering different arcs
-	labels: ['Red', 'Yellow', 'Blue'],
 };
 
-var maxPullPie = new Chart(ctx, {
-	type: 'pie',
-	data: data,
-	options: options,
-});
-
-function MaxPullChart() {
-	return (
-		<div>
-			<maxPullPie />
-		</div>
-	);
+// eslint-disable-next-line react/prefer-stateless-function
+export default class MaxPullChart extends React.Component {
+	render() {
+		return (
+			<Fragment>
+				<Doughnut
+					data={state}
+					options={{
+						title: {
+							display: true,
+							text: '1-Arm Max Force in Pounds',
+							fontSize: 20,
+						},
+						legend: {
+							display: true,
+							position: 'bottom',
+						},
+					}}
+				/>
+			</Fragment>
+		);
+	}
 }
-
-export default MaxPullChart;

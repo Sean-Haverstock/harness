@@ -72,7 +72,7 @@ module.exports = {
 		],
 	},
 	resolve: {
-		extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.less', '.jpg'],
+		extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.jpg'],
 	},
 	devServer: {
 		port: 8050,

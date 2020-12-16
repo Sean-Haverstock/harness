@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 		flexGrow: 5,
 		fontFamily: 'Permanent Marker',
 		fontWeight: 'bold',
+		color: '#002f6c'
 	},
 	links: {
 		flexBasis: 1,
@@ -44,7 +45,7 @@ export default function NavBar() {
 					<NavLink
 						underline="none"
 						className={classes.harness}
-						color="primary"
+						// color="primary"
 						href="/"
 					>
 						HARNESS

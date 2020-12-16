@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography } from '@material-ui/core';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import ClimbsDisplay from './ClimbsDisplay';
 import MapWrapper from './LocationMap';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
+const useStyles = makeStyles({
 		mainContainer: {
+			
 		},
 		header: {
 			margin: 'auto',
@@ -32,8 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		fields: {
 			marginLeft: '15px',
 		},
-	})
-);
+	});
 
 function Search() {
 	const [routes, setRoutes] = useState([]);
