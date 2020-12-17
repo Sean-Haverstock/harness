@@ -21,6 +21,8 @@ export default class MaxPullChart extends React.Component {
 			<Fragment>
 				<Doughnut
 					data={state}
+					responsive={true}
+					maintainAspectRatio={false}
 					options={{
 						title: {
 							display: true,

@@ -7,11 +7,11 @@ import theme from '../UI/theme';
 const useStyles = makeStyles(() =>
 	createStyles({
 		header: {
-      fontFamily: 'Roboto',
+      fontFamily: 'Permanent Marker',
       padding: theme.spacing(1)
     },
     text: {
-      fontFamily: 'Roboto',
+      fontFamily: 'Permanent Marker',
       paddingLeft: theme.spacing(1)
     },
     // fieldsContainer: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() =>
     //   // paddingTop: '3px'
     // },
     inputsContainer: {
-      minWidth: '360px',
+      // minWidth: '350px',
       paddingBottom: theme.spacing(1)
     },
     inputs: {
@@ -46,12 +46,12 @@ export default function Exercise() {
       <Typography className={classes.text} variant='subtitle2' color='primary'>Finger Position: Half-Crimp</Typography> */}
       <Grid container className={classes.inputsContainer}>
         {/* <div className={classes.fields}> */}
-        <Grid item md={3} sm={6}>
-          <label className={classes.inputs} for="Edge Size">
+        <Grid item md={3} sm={6} xs={6}>
+          <label className={classes.inputs} htmlFor="Edge Size">
             <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Edge Size: </Typography>
           </label>
         </Grid>
-        <Grid item md={3} sm={6}>
+        <Grid item md={3} sm={6} xs={6}>
             <select
           
             id="Edge Size"
@@ -64,12 +64,12 @@ export default function Exercise() {
               <option value="8mm">8mm</option>
             </select>
         </Grid>  
-        <Grid item md={3} sm={6}>
-            <label className={classes.inputs} for="Finger Position">
+        <Grid item md={3} sm={6} xs={6}>
+            <label className={classes.inputs} htmlFor="Finger Position">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Finger Position: </Typography>
             </label>
         </Grid>
-        <Grid item md={3} sm={6}>  
+        <Grid item md={3} sm={6} xs={6}>  
             <select
             
             id="Edge Size"
@@ -82,52 +82,52 @@ export default function Exercise() {
             </select>
          </Grid>
             
-        <Grid item md={3} sm={6}>
-            <label className={classes.inputs} for="rep1">
+        <Grid item md={3} sm={6} xs={6}>
+            <label className={classes.inputs} htmlFor="rep1">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Rep 1: </Typography>
             </label>
         </Grid>
-        <Grid item md={3} sm={6}>   
+        <Grid item md={3} sm={6} xs={6}>   
             <input className={classes.inputs}></input>
         </Grid >
-        <Grid item md={3} sm={6}>
-            <label for="rep1">
+        <Grid item md={3} sm={6} xs={6}>
+            <label htmlFor="rep1">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Rep 2: </Typography>
             </label>
         </Grid>   
-        <Grid item md={3} sm={6}>
+        <Grid item md={3} sm={6} xs={6}>
             <input className={classes.inputs}></input> 
         </Grid>
-        <Grid item md={3} sm={6}>
-            <label for="rep1">
+        <Grid item md={3} sm={6} xs={6}>
+            <label htmlFor="rep1">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Rep 3: </Typography>
             </label>
         </Grid>   
-        <Grid item md={3} sm={6}>
+        <Grid item md={3} sm={6} xs={6}>
             <input className={classes.inputs}></input> 
         </Grid>
-        <Grid item md={3} sm={6}>
-            <label for="rep1">
+        <Grid item md={3} sm={6} xs={6}>
+            <label htmlFor="rep1">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Rep 4: </Typography>
             </label>
         </Grid>    
-        <Grid item md={3} sm={6}>    
+        <Grid item md={3} sm={6} xs={6}>    
             <input className={classes.inputs}></input> 
          </Grid>
-         <Grid item md={3} sm={6}>
-            <label for="rep1">
+         <Grid item md={3} sm={6} xs={6}>
+            <label htmlFor="rep1">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Rep 5: </Typography>
             </label>
           </Grid>
-          <Grid item md={3} sm={6}>
+          <Grid item md={3} sm={6} xs={6}>
             <input className={classes.inputs}></input> 
           </Grid>
-          <Grid item md={3} sm={6}>
-            <label className={classes.inputs} for="rep1">
+          <Grid item md={3} sm={6} xs={6}>
+            <label className={classes.inputs} htmlFor="rep1">
               <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Bodyweight: </Typography>
             </label>
         </Grid>  
-        <Grid item md={3} sm={6}>
+        <Grid item md={3} sm={6} xs={6}>
           <input className={classes.inputs}></input>
           </Grid> 
       </Grid>
@@ -144,7 +144,7 @@ export default function Exercise() {
 
       //   <div className={classes.fieldsContainer}>
       //   {/* <div className={classes.fields}> */}
-      //     <label className={classes.inputs} for="Edge Size">
+      //     <label className={classes.inputs} htmlFor="Edge Size">
       //       <Typography className={classes.text} variant='subtitle2' color='primary' display="inline">Edge Size: </Typography>
       //     </label>
       //       <select

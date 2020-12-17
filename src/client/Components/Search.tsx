@@ -4,11 +4,12 @@ import { Container, Typography } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
 import ClimbsDisplay from './ClimbsDisplay';
 import MapWrapper from './LocationMap';
+import theme from '../UI/theme';
 
 
 const useStyles = makeStyles({
 		mainContainer: {
-			
+			backgroundColor: theme.palette.primary.light,
 		},
 		header: {
 			margin: 'auto',
@@ -32,7 +33,12 @@ const useStyles = makeStyles({
 		fields: {
 			marginLeft: '15px',
 		},
+		root: {
+			fontFamily: 'Permanent Marker',
+			color: theme.palette.primary.dark,
+		}
 	});
+
 
 function Search() {
 	const [routes, setRoutes] = useState([]);
@@ -96,7 +102,7 @@ function Search() {
 			</header>
 			<div className={classes.formContainer}>
 				<form>
-					<label className={classes.fields} for="type">
+					<label className={classes.fields} htmlFor="type">
 						<Typography display="inline">Type:</Typography>
 					</label>
 
@@ -108,7 +114,7 @@ function Search() {
 						value="Trad"
 						onChange={handleTypeSelection}
 					/>
-					<label for="Trad">
+					<label htmlFor="Trad">
 						<Typography display="inline">Trad</Typography>
 					</label>
 
@@ -120,14 +126,14 @@ function Search() {
 						value="Sport"
 						onChange={handleTypeSelection}
 					/>
-					<label for="Sport">
+					<label htmlFor="Sport">
 						<Typography display="inline">Sport</Typography>
 					</label>
 
 					{/* <input className={classes.fields} type="radio" id="Boulder" name="type" value="Boulder" onChange={handleTypeSelection} />
-						<label for="Boulder"><Typography display='inline'>Boulder</Typography></label> */}
+						<label htmlFor="Boulder"><Typography display='inline'>Boulder</Typography></label> */}
 					
-					<label className={classes.fields} for="grade">
+					<label className={classes.fields} htmlFor="grade">
 						<Typography display="inline">Grade:</Typography>
 					</label>
 					<select

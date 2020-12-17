@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Exercise from './Exercise'
-import FullCrimp from './FullCrimp';
 import theme from '../UI/theme';
 import MaxPullChart from './MaxPullChart';
 
@@ -19,15 +18,26 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.primary.main,
     columnRuleColor: theme.palette.primary.main,
     // columnGap: '10px',
+    ["@media (max-width:850px)"]: {
+      gridTemplateColumns: '.2fr 1.8fr',
+      gridTemplateRows: '.2fr 1.6fr 1.6fr',
+      gridTemplateAreas:
+       `"header header"
+       "aside exercise"
+        "aside chart"`,
+        height: 'auto',
+    },
     // rowGap: '10px',
     ["@media (max-width:640px)"]: {
       gridTemplateColumns: '1fr',
-      gridTemplateRows: '.2fr .8fr 1fr 1fr',
+      gridTemplateRows: '.25fr 1.5fr 1.5fr .75fr',
       gridTemplateAreas:
        `"header"
-        "aside"
         "exercise"
-        "chart"`,
+        "chart"
+        "aside"`,
+        height: 'auto',
+        overflow: 'auto',
     }
 
   },
@@ -43,7 +53,7 @@ const useStyles = makeStyles({
     // borderRadius: '3px'
   },
   aside: {
-    minWidth: '200px'
+    minWidth: '200px',
     color: 'white',
     gridArea: 'aside',
     // border: '2px solid #002f6c',
@@ -58,19 +68,39 @@ const useStyles = makeStyles({
     borderRadius: '3px',
     backgroundColor: theme.palette.secondary.light,
   },
-  chartContainer: {
+  chartsContainer: {
     gridArea: 'chart',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     borderRadius: '3px',
     backgroundColor: theme.palette.secondary.light,
+    overflow: 'hidden',
+    ["@media (max-width:800px)"]: {
+      overflow: 'visible',
+    },
   },
   content: {
+    flex: 1,
     backgroundColor: theme.palette.primary.light,
     margin: `${theme.spacing(1, 4)}`,
     boxShadow: '1px 1px 3px #002f6c',
     borderRadius: '3px'
+  },
+  chartContainer: {
+    position: 'relative',
+    height: '100%!important',
+    flex: 1,
+    // minWidth: '300px',
+    // overflow: 'hidden',
+    backgroundColor: theme.palette.primary.light,
+    margin: `${theme.spacing(1, 4)}`,
+    boxShadow: '1px 1px 3px #002f6c',
+    borderRadius: '3px',
+
+    ["@media (max-width:800px)"]: {
+      overflow: 'visible',
+    },
   },
   text: {
     fontFamily: 'Roboto',
@@ -92,20 +122,22 @@ export default function Dashboard() {
       <aside className={classes.aside}>Sidebar</aside>
       
       <div className={classes.exerciseContainer} id="exercise">
-        <header className={classes.header}>
-            <Typography className={classes.text} variant='h4' color='secondary'>Hello, Sean</Typography>
-        </header>
         <div className={classes.content}>
-          <Exercise />
+          <header className={classes.header}>
+              <Typography className={classes.text} variant='h4' color='secondary'>Hello, Sean</Typography>
+          </header>
         </div>
+          <div className={classes.content}>
+            <Exercise />
+          </div>
       </div>
       
-      <div className={classes.chartContainer} id="chart">
-        <div className={classes.content}>
-          <MaxPullChart className={classes.content}/>
+      <div className={classes.chartsContainer} id="chart">
+        <div className={classes.chartContainer}>
+          <MaxPullChart />
         </div>
-        <div className={classes.content}>
-          <MaxPullChart className={classes.content}/>
+        <div className={classes.chartContainer}>
+          <MaxPullChart />
         </div>
       </div>
     </div>
