@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 
 const useStyles = makeStyles({
 	root: {
-		marginTop: 10,
+		margin: 40,
 		height: 20,
 		display: 'flex',
 		alignItems: 'center',
@@ -19,31 +18,16 @@ const useStyles = makeStyles({
 
 export default function VerticalSlider() {
 	const classes = useStyles();
-	const [routes, setRoutes] = useState([]);
 	const [test, setTest] = useState('');
 	const [grade, setGrade] = useState([0, 100]);
 
 	// const handleChange = (event, newValue) => {
 	// 	setValue(newValue);
 	// };
-	// useEffect(() => {
-	// 	axios
-	// 		.get('/api/climbs')
-	// 		.then((res) => {
-	// 			let data = res.data.routes;
-	// 			setRoutes(data);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// }, []);
 
-	for (let i = 0; i < routes.length; i++) {
-		console.log(routes[i]);
-	}
-	function labeltext(index: number) {
-		// console.log('index: ', index);
-		// console.log(marks[index].label);
+	function labeltext(index) {
+		console.log('index: ', index);
+		console.log(marks[index].label);
 		return `${marks[index].label}`;
 	}
 
@@ -57,20 +41,19 @@ export default function VerticalSlider() {
 
 	return (
 		<React.Fragment>
-			<Typography id="horizontal-slider" gutterBottom>
-				Select Grade
-			</Typography>
-
 			<div className={classes.root}>
+				<Typography id="horizontal-slider" gutterBottom>
+					Select Grade
+				</Typography>
 				<Slider
 					aria-label="slider"
 					orientation="horizontal"
-					defaultValue={[0, 100]}
+					defaultValue={[8, 24]}
 					aria-labelledby="horizontal-slider"
 					// aria-valuetext="test"
 					getAriaLabel={labeltext}
 					step={4}
-					marks={true}
+					marks={marks}
 					valueLabelDisplay="auto"
 					onChange={handleChange}
 				/>

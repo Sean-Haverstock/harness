@@ -1,9 +1,18 @@
-const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const dotenv = require('dotenv');
+const path = require('path');
 
 const outputDirectory = 'dist';
+
+const env = dotenv.config().parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+	prev[`process.env.${next}`] = JSON.stringify(env[next]);
+	return prev;
+}, {});
 
 module.exports = {
 	entry: ['babel-polyfill', './client/index.tsx'],
@@ -78,6 +87,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './public/index.html',
 		}),
+		new webpack.DefinePlugin(envKeys),
 		new MiniCssExtractPlugin({
 			filename: './css/[name].css',
 			chunkFilename: './css/[id].css',

@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Landing from './Landing';
 import Navbar from './Navbar';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import { url } from 'inspector';
 import Search from './Search';
-import { Container, ThemeProvider } from '@material-ui/core';
-import Login from './Login';
-import MapPage from './MapPage';
-import AppBar from '@material-ui/core/AppBar';
+import { ThemeProvider } from '@material-ui/core';
+import SignIn from './Login';
 import theme from '../UI/theme';
+import Dashboard from './Dashboard';
+import DashboardTemp from './DashboardTemp';
 
 const App = () => {
 	return (
@@ -20,8 +17,8 @@ const App = () => {
 					<Navbar />
 					<Switch>
 						<Route exact path="/" component={Landing} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/map" component={MapPage} />
+						<Route exact path="/login" component={SignIn} />
+						<Route exact path="/dashboard" component={Dashboard} />
 						<Route exact path="/search" component={Search} />/
 					</Switch>
 				</ThemeProvider>

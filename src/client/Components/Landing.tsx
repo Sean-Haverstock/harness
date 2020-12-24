@@ -1,22 +1,25 @@
 import React from 'react';
-//import lama from '../../public/assets/images/lunag-crop.jpg';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
-import Slider from './Slider';
+import NavBar from './Navbar';
 
 const useStyles = makeStyles(() =>
 	createStyles({
-		header: {
-			// backgroundImage: 'url(../../public/assets/images/lunag-crop.jpg)',
-			height: '100%',
-			width: '100%',
-			backgroundRepeat: 'no-repeat',
-			backgroundSize: 'cover',
-			backgroundPosition: 'absolute',
-			zIndex: 0,
+		video: {
+			objectFit: 'cover',
+			width: '100vw',
+			height: '75vh',
+			position: 'relative',
 			top: 0,
 			left: 0,
 		},
+		viewportHeader: {
+			position: 'relative',
+			height: '100vh',
+			textAlign: 'center',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+		}
 	})
 );
 
@@ -24,7 +27,11 @@ const Landing = () => {
 	const classes = useStyles();
 	return (
 		<div>
-			{/* <img src={lama} className={classes.header} /> */}
+			{/* <video className={classes.video} playsInline muted loop autoPlay>
+				<source src="https://harnessbucket.s3.amazonaws.com/LamaSummit.mp4" type="video/webm" />
+			</video> */}
+			<header className={classes.viewportHeader}>
+			</header>
 		</div>
 	);
 };
