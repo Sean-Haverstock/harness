@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Typography } from '@material-ui/core';
+import { Container, InputBase, Typography } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
 import ClimbsDisplay from './ClimbsDisplay';
 import MapWrapper from './LocationMap';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import theme from '../UI/theme';
 
 
@@ -16,10 +18,23 @@ const useStyles = makeStyles({
 			maxWidth: '1200px',
 			padding: '20px',
 		},
+		head: {
+			fontFamily: 'Roboto',
+			textAlign: 'center'
+		},
 		formContainer: {
+			display: 'flex',
+			justifyContent: 'space-between',
+			alignItems: 'center',
 			margin: 'auto',
 			maxWidth: '1200px',
 			padding: '20px',
+			["@media (max-width:700px)"]: {
+				flexDirection: 'column'
+			},
+		},
+		form: {
+
 		},
 		buttonContainer: {
 			display: 'flex',
@@ -46,6 +61,7 @@ function Search() {
 	const [grade, setGrade] = useState('5.6');
 	const [type, setType] = useState('');
 	const classes = useStyles();
+	const grades = ['5.5', '5.6', '5.7', '5.8', '5.9', '5.10a', '5.10b', '5.10c', '5.10d', '5.11a', '5.11b', '5.11c', '5.11d', '5.12a', '5.12b', '5.12c', '5.12d', '5.13a', '5.13b', '5.13c', '5.13d', '5.14a', '5.14b', '5.14c', '5.14d']
 
 	useEffect(() => {
 		axios
@@ -95,13 +111,18 @@ function Search() {
 
 	return (
 		<div className={classes.mainContainer}>
-			<header className={classes.header}>
-				<Typography variant="h4">
+			{/* <header > */}
+			<Container className={classes.header}>
+				<Typography className={classes.head} variant="h4">
 					Explore America's Climbing Routes
 				</Typography>
-			</header>
-			<div className={classes.formContainer}>
-				<form>
+				<InputBase
+				// placehoder='Search climb by name'
+				></InputBase>
+			</Container>
+			<Container className={classes.formContainer}>
+				
+				<form className={classes.form}>
 					<label className={classes.fields} htmlFor="type">
 						<Typography display="inline">Type:</Typography>
 					</label>
@@ -142,30 +163,9 @@ function Search() {
 						name="type"
 						onChange={handleGradeSelection}
 					>
-						<option value="5.6">5.6</option>
-						<option value="5.7">5.7</option>
-						<option value="5.8">5.8</option>
-						<option value="5.9">5.9</option>
-						<option value="5.10a">5.10a</option>
-						<option value="5.10b">5.10b</option>
-						<option value="5.10c">5.10c</option>
-						<option value="5.10d">5.10d</option>
-						<option value="5.11a">5.11a</option>
-						<option value="5.11b">5.11b</option>
-						<option value="5.11c">5.11c</option>
-						<option value="5.11d">5.11d</option>
-						<option value="5.12a">5.12a</option>
-						<option value="5.12b">5.12b</option>
-						<option value="5.12c">5.12c</option>
-						<option value="5.12d">5.12d</option>
-						<option value="5.13a">5.13a</option>
-						<option value="5.13b">5.13b</option>
-						<option value="5.13c">5.13c</option>
-						<option value="5.13d">5.13d</option>
-						<option value="5.14a">5.14a</option>
-						<option value="5.14b">5.14b</option>
-						<option value="5.14c">5.14c</option>
-						<option value="5.14d">5.14d</option>
+						{grades.map(grade => {
+							return <option value={grade}>{grade}</option>
+						})}
 					</select>
 
 					<button type="submit" className={classes.fields} onClick={handleFindClimbs}>
@@ -190,8 +190,8 @@ function Search() {
 						Map View
 					</button>
 				</div>
-				</div>		
-			<Container>
+				</Container>		
+			<Container className={classes.header}>
 				{isListView ? (
 					<ClimbsDisplay routes={routes} />
 				) : (
