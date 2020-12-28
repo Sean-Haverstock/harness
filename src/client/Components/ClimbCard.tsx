@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,7 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { green, red } from '@material-ui/core/colors';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Rating from '@material-ui/lab/Rating';
+import theme from '../UI/theme';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,6 +47,20 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const StyledTypography = withStyles({
+  root: {
+    
+  },
+  h6: {
+    fontFamily: 'Roboto',
+    color: theme.palette.primary.main,
+  },
+  subtitle2: {
+    fontFamily: 'Rokkit',
+    paddingTop: '3px'
+  }
+})(Typography)
+
 function ClimbCard ({ name, img, cssType, type, rating, stars }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
@@ -62,12 +77,7 @@ function ClimbCard ({ name, img, cssType, type, rating, stars }) {
             {cssType}
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
-        title='hello'
+        title={<StyledTypography variant='h6'>{name}</StyledTypography>}
       />
       <CardMedia
         className={classes.media}
@@ -75,15 +85,17 @@ function ClimbCard ({ name, img, cssType, type, rating, stars }) {
         title={name}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <StyledTypography variant="subtitle2" color="textSecondary">
           {type}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        </StyledTypography>
+        <StyledTypography variant="subtitle2" color="textSecondary">
           Rating: {rating}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Stars: {stars}
-        </Typography>
+        </StyledTypography>
+        <span>
+        <StyledTypography variant="subtitle2" color="textSecondary">
+          Stars: {stars === 0 ? 'not yet rated' : <Rating value={stars} size='small' precision={.5} readOnly />}
+        </StyledTypography>
+        </span>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">

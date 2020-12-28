@@ -27,9 +27,9 @@ const Landing = () => {
 	const classes = useStyles();
 	return (
 		<div>
-			{/* <video className={classes.video} playsInline muted loop autoPlay>
+			<video className={classes.video} playsInline muted loop autoPlay>
 				<source src="https://harnessbucket.s3.amazonaws.com/LamaSummit.mp4" type="video/webm" />
-			</video> */}
+			</video>
 			<header className={classes.viewportHeader}>
 			</header>
 		</div>

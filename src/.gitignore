@@ -5,3 +5,5 @@ dist
 *.log
 yarn.lock
 .env
+assets/
+colors.js

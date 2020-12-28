@@ -1,4 +1,4 @@
-const db = require('../model/model');
+const db = require('../models/model');
 
 const climbsController = {};
 

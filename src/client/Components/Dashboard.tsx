@@ -1,68 +1,110 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Exercise from './Exercise'
-import FullCrimp from './FullCrimp';
-import Chart from 'chart.js';
 import theme from '../UI/theme';
 import MaxPullChart from './MaxPullChart';
-import { Doughnut } from 'react-chartjs-2'
 
 const useStyles = makeStyles({
 	dashboardContainer: {
-    padding: '20px',
+    // padding: '20px',
     display: 'grid',
     height: '90vh',
 		gridTemplateColumns: '.5fr 1.5fr 1.5fr',
-    gridTemplateRows: '.2fr 1.8fr',
+    gridTemplateRows: '.1fr 1.9fr',
     gridTemplateAreas: 
       `"header header header"
        "aside exercise chart"`,
-    backgroundColor: '#002f6c',
-    columnRuleColor: '#002f6c',
-    columnGap: '10px',
-    rowGap: '10px',
-    ["@media (min-height:800px)"]: {
-      
+    backgroundColor: theme.palette.primary.main,
+    columnRuleColor: theme.palette.primary.main,
+    // columnGap: '10px',
+    ["@media (max-width:850px)"]: {
+      gridTemplateColumns: '.2fr 1.8fr',
+      gridTemplateRows: '.2fr 1.6fr 1.6fr',
+      gridTemplateAreas:
+       `"header header"
+       "aside exercise"
+        "aside chart"`,
+        height: 'auto',
+    },
+    // rowGap: '10px',
+    ["@media (max-width:640px)"]: {
+      gridTemplateColumns: '1fr',
+      gridTemplateRows: '.25fr 1.5fr 1.5fr .75fr',
+      gridTemplateAreas:
+       `"header"
+        "exercise"
+        "chart"
+        "aside"`,
+        height: 'auto',
+        overflow: 'auto',
     }
 
   },
-  headerContainer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+  topBar: {
     gridArea: 'header',
-    // border: '2px solid #002f6c',
     borderRadius: '3px',
-    backgroundColor: '#f6f9fc',
+    backgroundColor: theme.palette.primary.dark,
   },
   header: {
-    paddingLeft: '15px',
-    backgroundColor: '#f6f9fc',
-    flexGrow: 3,
-  },
-  selection: {
-    backgroundColor: '#f6f9fc',
-    flexGrow: 1,
+    // backgroundColor: theme.palette.primary.light,
+    margin: `${theme.spacing(1, 4)}`,
+    // boxShadow: '1px 1px 3px #002f6c',
+    // borderRadius: '3px'
   },
   aside: {
+    minWidth: '200px',
+    color: 'white',
     gridArea: 'aside',
     // border: '2px solid #002f6c',
     borderRadius: '3px',
-    backgroundColor: '#f6f9fc',
+    backgroundColor: theme.palette.primary.main,
   },
-  exercise: {
+  exerciseContainer: {
     gridArea: 'exercise',
-    // border: '2px solid #002f6c',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
     borderRadius: '3px',
-    backgroundColor: '#f6f9fc',
+    backgroundColor: theme.palette.secondary.light,
   },
-  chart: {
+  chartsContainer: {
     gridArea: 'chart',
-    // border: '2px solid #002f6c',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
     borderRadius: '3px',
-    backgroundColor: '#f6f9fc',
+    backgroundColor: theme.palette.secondary.light,
+    overflow: 'hidden',
+    ["@media (max-width:800px)"]: {
+      overflow: 'visible',
+    },
   },
+  content: {
+    flex: 1,
+    backgroundColor: theme.palette.primary.light,
+    margin: `${theme.spacing(1, 4)}`,
+    boxShadow: '1px 1px 3px #002f6c',
+    borderRadius: '3px'
+  },
+  chartContainer: {
+    position: 'relative',
+    height: '100%!important',
+    flex: 1,
+    // minWidth: '300px',
+    // overflow: 'hidden',
+    backgroundColor: theme.palette.primary.light,
+    margin: `${theme.spacing(1, 4)}`,
+    boxShadow: '1px 1px 3px #002f6c',
+    borderRadius: '3px',
+
+    ["@media (max-width:800px)"]: {
+      overflow: 'visible',
+    },
+  },
+  text: {
+    fontFamily: 'Roboto',
+  }
 });
 
 export default function Dashboard() {
@@ -75,31 +117,29 @@ export default function Dashboard() {
   }
   return (
     <div className={classes.dashboardContainer}>
-      <div className={classes.headerContainer}>
-        <h1 className={classes.header}>Welcome, Sean. </h1>
-        <p>What do you want to train today? </p>
-        <div className={classes.selection}>
-          <label className={classes.fields} for="exercise">
-						<Typography display="inline">Exercise:  </Typography>
-					</label>
-					<select
-						className={classes.fields}
-						id="exercise"
-            name="exercise"
-            onChange={handleExercise}
-					>
-            <option value="hc20mm">Max-Pull: HC20mm</option>
-						<option value="oh20mm">Max-Pull: OH20mm</option>
-						<option value="fc10mm">Max-Pull: FC10mm</option>
-          </select>
-        </div>
-      </div>
+      <div className={classes.topBar} />
       
       <aside className={classes.aside}>Sidebar</aside>
-      <div className={classes.exercise} id="exercise">
-        {exercise === 'hc20mm' ? <Exercise /> : <FullCrimp />}
+      
+      <div className={classes.exerciseContainer} id="exercise">
+        <div className={classes.content}>
+          <header className={classes.header}>
+              <Typography className={classes.text} variant='h4' color='secondary'>Hello, Sean</Typography>
+          </header>
         </div>
-      <div className={classes.chart} id="chart"><Doughnut /></div>
+          <div className={classes.content}>
+            <Exercise />
+          </div>
+      </div>
+      
+      <div className={classes.chartsContainer} id="chart">
+        <div className={classes.chartContainer}>
+          <MaxPullChart />
+        </div>
+        <div className={classes.chartContainer}>
+          <MaxPullChart />
+        </div>
+      </div>
     </div>
   )
 }
