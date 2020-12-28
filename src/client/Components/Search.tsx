@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, InputBase, Typography } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
-import ClimbsDisplay from './ClimbsDisplay';
+import Container from '@material-ui/core/Container';
 import MapWrapper from './LocationMap';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
+import Typography from '@material-ui/core/Typography';
+import ClimbsDisplay from './ClimbsDisplay';
 import theme from '../UI/theme';
+import { TextField } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
@@ -111,14 +112,16 @@ function Search() {
 
 	return (
 		<div className={classes.mainContainer}>
-			{/* <header > */}
+			
 			<Container className={classes.header}>
 				<Typography className={classes.head} variant="h4">
 					Explore America's Climbing Routes
 				</Typography>
-				<InputBase
+				<TextField
 				// placehoder='Search climb by name'
-				></InputBase>
+				>
+
+				</TextField>
 			</Container>
 			<Container className={classes.formContainer}>
 				
@@ -163,6 +166,7 @@ function Search() {
 						name="type"
 						onChange={handleGradeSelection}
 					>
+						{/* map over array of grades for drop down menu options */}
 						{grades.map(grade => {
 							return <option value={grade}>{grade}</option>
 						})}

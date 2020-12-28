@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -15,10 +14,8 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 	return prev;
 }, {});
 
-let isDevelopment = 'development';
 module.exports = {
-	mode: isDevelopment ? 'development' : 'production',
-	entry: './client/index.tsx',
+	entry: ['babel-polyfill', './client/index.tsx'],
 	output: {
 		path: path.join(__dirname, outputDirectory),
 		filename: './js/[name].bundle.js',
@@ -27,34 +24,20 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx)?$/,
+				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
-				use: [
-					// ... other loaders
-					{
-						loader: 'babel-loader',
-						options: {
-							// ... other options
-							plugins: [
-								// ... other plugins
-								isDevelopment && require.resolve('react-refresh/babel'),
-							].filter(Boolean),
-						},
-					},
-				],
+				use: {
+					loader: 'babel-loader',
+				},
 			},
 			{
 				test: /\.tsx?$/,
 				use: [
-					isDevelopment && {
-						loader: 'babel-loader',
-						options: { plugins: ['react-refresh/babel'] },
-					},
 					{
 						loader: 'awesome-typescript-loader',
-						options: { transpileOnly: true },
 					},
-				].filter(Boolean),
+				],
+				exclude: /node_modules/,
 			},
 			{
 				enforce: 'pre',
@@ -73,6 +56,13 @@ module.exports = {
 						},
 					},
 					{ loader: 'css-loader' },
+					{
+						loader: 'less-loader',
+						options: {
+							strictMath: true,
+							noIeCompat: true,
+						},
+					},
 				],
 			},
 			{
@@ -103,7 +93,5 @@ module.exports = {
 			filename: './css/[name].css',
 			chunkFilename: './css/[id].css',
 		}),
-		// isDevelopment && new webpack.HotModuleReplacementPlugin(),
-		isDevelopment && new ReactRefreshWebpackPlugin(),
-	].filter(Boolean),
+	],
 };

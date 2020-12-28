@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -61,10 +62,10 @@ export default function SignUp() {
 
   function handleInfoChange(e) {
     setUserInfo({...userInfo, [e.target.id]: e.target.value})
-    console.log(userInfo)
   }
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
+    console.log('in here')
     e.preventDefault();
     const {
       username,
@@ -75,7 +76,7 @@ export default function SignUp() {
       confirmPassword
     } = userInfo;
 
-    if (password !== confirmPassword) return alert('Password do not match!')
+    // if (password !== confirmPassword) return alert('Password do not match!')
 
     const body = {
       username,
@@ -83,23 +84,30 @@ export default function SignUp() {
       lastName,
       email,
       password,
+      confirmPassword
     };
 
-    let response = await fetch('/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+  try {
+     const response = await axios.post('api/signup', body)
+     console.log('balls', response)
+    }
+   catch(error) {
+      console.log('error balss', error.response.data)
+    }
+  };
+    //   .then(res => res.json())
+    //   .then(data => {
+    //   console.log('RESPONSE', console.log(data));
+    //   setRegistered(true);
+    //   // setAuthStatus({ isLoggedIn: true, username });
+    //   // setErrorMsg('New user could not be created - duplicate username/email');
+    // }) 
+  //   catch(err) {
+  //     console.log('in error', err.body)
+  //   }
+  // }
 
-    if (response.status === 200) {
-      setRegistered(true);
-      console.log(registered)
-      // setAuthStatus({ isLoggedIn: true, username });
-    } 
-      // setErrorMsg('New user could not be created - duplicate username/email');
-};
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -111,7 +119,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate={false} onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -194,7 +202,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            // onSubmit={handleSubmit}
+            
           >
             Sign Up
           </Button>
@@ -218,3 +226,11 @@ export default function SignUp() {
     </Container>
   );
 }
+
+ // let response = await fetch('/api/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(body),
+    // })
