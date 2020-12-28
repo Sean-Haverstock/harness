@@ -89,10 +89,10 @@ export default function SignUp() {
 
   try {
      const response = await axios.post('api/signup', body)
-     console.log('balls', response)
+     console.log('error', response)
     }
    catch(error) {
-      console.log('error balss', error.response.data)
+      console.log('error', error.response.data)
     }
   };
     //   .then(res => res.json())
