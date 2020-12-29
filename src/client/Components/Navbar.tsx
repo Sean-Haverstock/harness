@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { BrowserRouter as Link } from 'react-router-dom';
 import { Link as NavLink } from '@material-ui/core';
-// import Container from '@material-ui/core/Container';
+
 
 import theme from '../UI/theme';
 
@@ -37,7 +37,6 @@ const useStyles = makeStyles({
 export default function NavBar() {
 	const classes = useStyles();
 	const theme = useTheme();
-	console.log('theme', theme);
 	return (
 		<div className={classes.appBar}>
 		<div className={classes.navContainer}>

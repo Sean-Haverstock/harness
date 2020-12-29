@@ -13,6 +13,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Modal from '@material-ui/core/Modal';
+import Login from './Login';
+import { BrowserRouter as Link } from 'react-router-dom';
+import { Link as NavLink } from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -49,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const [registered, setRegistered] = useState(false);
+  const [isRegistered, setRegistered] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   // const [authenticated, setAuthenticated] = props;
   const [userInfo, setUserInfo] = useState({
     username: '',
@@ -59,9 +64,15 @@ export default function SignUp() {
     confirmPassword: '',
     email: '',
   });
+  const [validationErrors, setValidationErrors] = useState({
+    username: null,
+    password: null,
+    email: null,
+  });
 
   function handleInfoChange(e) {
     setUserInfo({...userInfo, [e.target.id]: e.target.value})
+    setValidationErrors({...validationErrors, [e.target.id]: null})
   }
 
   async function handleSubmit(e) {
@@ -76,8 +87,6 @@ export default function SignUp() {
       confirmPassword
     } = userInfo;
 
-    // if (password !== confirmPassword) return alert('Password do not match!')
-
     const body = {
       username,
       firstName,
@@ -89,27 +98,49 @@ export default function SignUp() {
 
   try {
      const response = await axios.post('api/signup', body)
-     console.log('error', response)
+     console.log('response', response)
+     setRegistered(true);
     }
    catch(error) {
-      console.log('error', error.response.data)
-    }
-  };
-    //   .then(res => res.json())
-    //   .then(data => {
-    //   console.log('RESPONSE', console.log(data));
-    //   setRegistered(true);
-    //   // setAuthStatus({ isLoggedIn: true, username });
-    //   // setErrorMsg('New user could not be created - duplicate username/email');
-    // }) 
-  //   catch(err) {
-  //     console.log('in error', err.body)
-  //   }
-  // }
+      console.log('catch error', error.response.data)
+      let errors = error.response.data
+      let obj = {};
+      for (error in errors) {
+          let param = errors[error].param
+          let msg = errors[error].msg
+          obj[param] = msg;
+      }
+      console.log('validation object', obj)
+      setValidationErrors(Object.assign(validationErrors, obj))
+    
+      console.log('validation error', validationErrors);
+    
+  }
+}
 
+  const handleClose = (e) => {
+    e.preventDefault();
+    setModalOpen(false)
+  }
+  
 
 
   return (
+    isRegistered ? 
+    ( <Modal
+        open={modalOpen}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        
+          <Typography variant='h4'>
+            Registration Success! Please 
+            
+          </Typography>	
+        
+       
+      </Modal> ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -131,6 +162,8 @@ export default function SignUp() {
             autoComplete="username"
             autoFocus
             onChange={handleInfoChange}
+            error={validationErrors.username !== null}
+            helperText={validationErrors.username}
           />
           <TextField
             variant="outlined"
@@ -167,6 +200,8 @@ export default function SignUp() {
             autoComplete="email"
             autoFocus
             onChange={handleInfoChange}
+            error={validationErrors.email !== null}
+            helperText={validationErrors.email}
           />
           <TextField
             variant="outlined"
@@ -179,6 +214,8 @@ export default function SignUp() {
             id="password"
             autoComplete="current-password"
             onChange={handleInfoChange}
+            error={validationErrors.password !== null}
+            helperText={validationErrors.password}
           />
           <TextField
             variant="outlined"
@@ -224,13 +261,5 @@ export default function SignUp() {
         <Copyright />
       </Box>
     </Container>
-  );
+  ));
 }
-
- // let response = await fetch('/api/signup', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(body),
-    // })

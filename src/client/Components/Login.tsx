@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -46,8 +47,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function Login() {
   const classes = useStyles();
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleCredentials = (e) => {
+    e.preventDefault();
+    setCredentials({
+      ...credentials,
+      [e.target.id]: e.target.value
+    })
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const { email, password } = credentials;
+    const body = {
+      email,
+      password
+    }
+
+    try {
+      let response = await axios.post('/api/login', {
+        body: JSON.stringify(body)
+      })
+      console.log('response', response)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,7 +92,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLogin}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -70,6 +103,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleCredentials}
           />
           <TextField
             variant="outlined"
@@ -81,6 +115,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleCredentials}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

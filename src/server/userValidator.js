@@ -27,15 +27,17 @@ const generateValidators = () => [
 ];
 
 const reporter = (req, res, next) => {
-	const errors = validationResult(req);
-	console.log('reporter', errors);
+	const result = validationResult(req);
+	console.log('reporter', result.errors);
 
-	if (!errors.isEmpty()) {
-		const errorMessages = errors.array().map((error) => error.msg);
-
-		return res.status(400).json({
-			errors: errorMessages,
-		});
+	if (!result.isEmpty()) {
+		// const response = errors.array().map((error) => {
+		// 	let obj = {};
+		// 	obj[error.param] = error.msg;
+		// 	return obj;
+		// });
+		// console.log('validator response', response);
+		return res.status(400).json(result.errors);
 	}
 
 	next();

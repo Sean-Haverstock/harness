@@ -15,12 +15,22 @@ authController.register = async (req, res, next) => {
 		// check if username exists in DB, if the rowCount on the result object is greater than 0, username already exists in DB
 		const usernameResponse = await model.query(usernameQueryText, [username]);
 		if (usernameResponse.rowCount) {
-			return res.status(400).send(`${username} has already been registered`);
+			return res.status(400).json([
+				{
+					param: 'username',
+					msg: `${username} has already been registered`,
+				},
+			]);
 		}
 		// check if email is already in DB
 		const emailResponse = await model.query(emailQueryText, [email]);
 		if (emailResponse.rowCount) {
-			return res.status(400).send(`${email} has already been registered`);
+			return res.status(400).json([
+				{
+					param: 'email',
+					msg: `${email} has already been registered`,
+				},
+			]);
 		}
 	} catch (err) {
 		console.log(err);
