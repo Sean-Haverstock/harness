@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Modal from '@material-ui/core/Modal';
-import Login from './Login';
-import { BrowserRouter as Link } from 'react-router-dom';
-import { Link as NavLink } from '@material-ui/core';
+import React, { useState } from "react";
+import axios from "axios";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Modal from "@material-ui/core/Modal";
+import { BrowserRouter as Link } from "react-router-dom";
+import { Link as NavLink } from "@material-ui/core";
+import Login from "./Login";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Harness
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -33,16 +33,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -56,12 +56,12 @@ export default function SignUp() {
   const [modalOpen, setModalOpen] = useState(false);
   // const [authenticated, setAuthenticated] = props;
   const [userInfo, setUserInfo] = useState({
-    username: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    confirmPassword: '',
-    email: '',
+    username: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
   });
   const [validationErrors, setValidationErrors] = useState({
     username: null,
@@ -70,12 +70,12 @@ export default function SignUp() {
   });
 
   function handleInfoChange(e) {
-    setUserInfo({...userInfo, [e.target.id]: e.target.value})
-    setValidationErrors({...validationErrors, [e.target.id]: null})
+    setUserInfo({ ...userInfo, [e.target.id]: e.target.value });
+    setValidationErrors({ ...validationErrors, [e.target.id]: null });
   }
 
   async function handleSubmit(e) {
-    console.log('in here')
+    console.log("in here");
     e.preventDefault();
     const {
       username,
@@ -83,7 +83,7 @@ export default function SignUp() {
       lastName,
       email,
       password,
-      confirmPassword
+      confirmPassword,
     } = userInfo;
 
     const body = {
@@ -92,52 +92,44 @@ export default function SignUp() {
       lastName,
       email,
       password,
-      confirmPassword
+      confirmPassword,
     };
 
-  try {
-     const response = await axios.post('api/signup', body)
-     console.log('response', response)
-     setRegistered(true);
-    }
-   catch(error) {
-      console.log('catch error', error.response.data)
-      let errors = error.response.data
-      let obj = {};
+    try {
+      const response = await axios.post("api/signup", body);
+      console.log("response", response);
+      setRegistered(true);
+    } catch (error) {
+      console.log("catch error", error.response.data);
+      const errors = error.response.data;
+      const obj = {};
       for (error in errors) {
-          let param = errors[error].param
-          let msg = errors[error].msg
-          obj[param] = msg;
+        const { param } = errors[error];
+        const { msg } = errors[error];
+        obj[param] = msg;
       }
-      console.log('validation object', obj)
-      setValidationErrors(Object.assign(validationErrors, obj))
-    
-      console.log('validation error', validationErrors);
-    
+      console.log("validation object", obj);
+      setValidationErrors(Object.assign(validationErrors, obj));
+
+      console.log("validation error", validationErrors);
+    }
   }
-}
 
   const handleClose = (e) => {
     e.preventDefault();
-    setModalOpen(false)
-  }
-  
+    setModalOpen(false);
+  };
 
-
-  return (
-    isRegistered ? 
-    ( <Modal
-        open={modalOpen}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-          <Typography variant='h4'>
-            Registration Success! Please 
-          </Typography>	
-        
-       
-      </Modal> ) : (
+  return isRegistered ? (
+    <Modal
+      open={modalOpen}
+      onClose={handleClose}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+    >
+      <Typography variant="h4">Registration Success! Please</Typography>
+    </Modal>
+  ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -147,7 +139,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -225,7 +217,7 @@ export default function SignUp() {
             id="confirmPassword"
             autoComplete="current-password"
             onChange={handleInfoChange}
-        />
+          />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -236,19 +228,21 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            
+            onSubmit={handleSubmit}
           >
             Sign Up
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="/" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/login" variant="body2">
-                {"Already have an account? Sign In"}
+              <Link to="/login">
+                <NavLink color="inherit" underline="hover" href="/login">
+                  Already have an account? Sign In
+                </NavLink>
               </Link>
             </Grid>
           </Grid>
@@ -258,5 +252,5 @@ export default function SignUp() {
         <Copyright />
       </Box>
     </Container>
-  ));
+  );
 }

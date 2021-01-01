@@ -1,8 +1,16 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core";
 import ClimbCard from "./ClimbCard";
+import theme from "../UI/theme";
 
+const useStyles = makeStyles({
+  root: {
+    backgroundImage: `linear-gradient(#000640 1%, transparent)`,
+  },
+});
 function ClimbsDisplay(props) {
+  const classes = useStyles();
   const climbs = props.routes
     .filter((route) => {
       return route.raw.imgMedium !== "";
@@ -28,7 +36,7 @@ function ClimbsDisplay(props) {
     });
 
   return (
-    <Grid container justify="center" spacing={3}>
+    <Grid container justify="center" className={classes.root} spacing={3}>
       {climbs}
     </Grid>
   );

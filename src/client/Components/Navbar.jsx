@@ -1,36 +1,36 @@
-import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { BrowserRouter as Link } from 'react-router-dom';
-import { Link as NavLink } from '@material-ui/core';
+import React from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { BrowserRouter as Link } from "react-router-dom";
+import { Link as NavLink } from "@material-ui/core";
 
-import theme from '../UI/theme';
+import theme from "../UI/theme";
 
 const useStyles = makeStyles({
   appBar: {
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   navContainer: {
-    margin: 'auto',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    maxWidth: '1000px',
-    minHeight: '64px',
-    backgroundColor: 'white'
+    margin: "auto",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    maxWidth: "1000px",
+    minHeight: "64px",
+    backgroundColor: "white",
   },
   harness: {
     flex: 5,
-    fontFamily: 'Permanent Marker',
-    fontWeight: 'bold',
-    color: '#002f6c',
-    paddingLeft: '1em'
+    fontFamily: "Permanent Marker",
+    fontWeight: "bold",
+    color: "#002f6c",
+    paddingLeft: "1em",
   },
   links: {
     flex: 1,
-    fontFamily: 'Roboto',
-    marginRight: theme.spacing(2)
-  }
+    fontFamily: "Roboto",
+    marginRight: theme.spacing(2),
+  },
 });
 
 export default function NavBar() {

@@ -10,7 +10,10 @@ import MapWrapper from "./LocationMap";
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundColor: theme.palette.primary.bglight,
+    backgroundImage: "linear-gradient(to bottom, #000640 10%, #fff 75%)",
+    display: "flex",
+    flexDirection: "column",
+    height: "40vh",
   },
   header: {
     display: "flex",
@@ -25,6 +28,7 @@ const useStyles = makeStyles({
   head: {
     fontFamily: "Roboto",
     textAlign: "center",
+    color: "#fff",
   },
   formContainer: {
     display: "flex",
@@ -51,13 +55,6 @@ const useStyles = makeStyles({
   },
   fields: {
     marginLeft: "15px",
-  },
-  cardsContainer: {
-    backgroundColor: theme.palette.primary.light,
-  },
-  cardsDisplay: {
-    display: "flex",
-    justifyContent: "space-evenly",
   },
   root: {
     fontFamily: "Permanent Marker",
@@ -239,11 +236,13 @@ function Search() {
         </div>
       </Container>
 
-      {isListView ? (
-        <ClimbsDisplay className={classes.cardsDisplay} routes={routes} />
-      ) : (
-        <MapWrapper routes={routes} />
-      )}
+      <div>
+        {isListView ? (
+          <ClimbsDisplay routes={routes} />
+        ) : (
+          <MapWrapper routes={routes} />
+        )}
+      </div>
     </div>
   );
 }

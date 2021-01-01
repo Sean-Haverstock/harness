@@ -5,7 +5,7 @@ import ClimbCard from "./ClimbCard";
 
 const mapStyles = {
   width: "90%",
-  height: "100vh",
+  height: "90vh",
   margin: "auto",
 };
 const containerStyle = {
@@ -15,6 +15,7 @@ const containerStyle = {
   margin: "auto",
   width: "100%",
   height: "100%",
+  // backgroundImage: `linear-gradient(transparent 1%, #000640)`,
 };
 
 const maps_api_key = process.env.REACT_APP_MAPS_API_KEY;
