@@ -7,23 +7,13 @@ import theme from '../UI/theme';
 const useStyles = makeStyles(() =>
 	createStyles({
 		header: {
-      fontFamily: 'Permanent Marker',
+      fontFamily: 'Roboto',
       padding: theme.spacing(1)
     },
     text: {
-      fontFamily: 'Permanent Marker',
+      fontFamily: 'Roboto',
       paddingLeft: theme.spacing(1)
     },
-    // fieldsContainer: {
-    //   display: 'flex',
-    //   justifyContent: 'space-evenly',
-    //   flexWrap: 'wrap'
-    // },
-    // fields: {
-    //   flex: '25',
-    //   paddingLeft: '10px',
-    //   // paddingTop: '3px'
-    // },
     inputsContainer: {
       // minWidth: '350px',
       paddingBottom: theme.spacing(1)

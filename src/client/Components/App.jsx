@@ -13,9 +13,10 @@ import SignUp from './SignUp';
 
 const App = () => {
 	const [width, setWidth] = useState(window.innerWidth);
-	const breakpoint = 640;
+	const breakpoint = 768;
+	
 	useEffect(() => {
-    const handleWindowResize = () => setWidth(window.innerWidth)
+  	const handleWindowResize = () => setWidth(window.innerWidth)
     window.addEventListener("resize", handleWindowResize);
     return () => window.removeEventListener("resize", handleWindowResize);
 	}, []);
