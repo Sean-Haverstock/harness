@@ -121,14 +121,16 @@ export default function SignUp() {
   };
 
   return isRegistered ? (
-    <Modal
-      open={modalOpen}
-      onClose={handleClose}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-    >
-      <Typography variant="h4">Registration Success! Please</Typography>
-    </Modal>
+    <Container>
+      <Modal
+        open={modalOpen}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Login />
+      </Modal>
+    </Container>
   ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -139,7 +141,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -148,7 +150,6 @@ export default function SignUp() {
             id="username"
             label="Username"
             name="username"
-            autoComplete="username"
             autoFocus
             onChange={handleInfoChange}
             error={validationErrors.username !== null}
@@ -228,7 +229,6 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onSubmit={handleSubmit}
           >
             Sign Up
           </Button>

@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     flex: 5,
     fontFamily: "Permanent Marker",
     fontWeight: "bold",
-    color: "#002f6c",
+    color: theme.palette.primary.dark,
     paddingLeft: "1em",
   },
   links: {
@@ -35,61 +35,38 @@ const useStyles = makeStyles({
 
 export default function NavBar() {
   const classes = useStyles();
-  const theme = useTheme();
+  const links = [
+    { href: "/search", name: "Search" },
+    { href: "/dashboard", name: "Dashboard" },
+    { href: "/login", name: "Login" },
+  ];
   return (
     <div className={classes.appBar}>
       <div className={classes.navContainer}>
         <Link to="/">
           <Typography variant="h4" className={classes.harness}>
-            <NavLink
-              underline="none"
-              className={classes.harness}
-              // color="primary"
-              href="/"
-            >
+            <NavLink underline="none" className={classes.harness} href="/">
               HARNESS
             </NavLink>
           </Typography>
         </Link>
 
-        <Link to="/search">
-          <Typography color="primary" align="center" variant="body1">
-            <NavLink
-              underline="none"
-              className={classes.links}
-              color="primary"
-              href="/search"
-            >
-              Search
-            </NavLink>
-          </Typography>
-        </Link>
-
-        <Link to="/dashboard">
-          <Typography color="primary" align="center" variant="body1">
-            <NavLink
-              underline="none"
-              className={classes.links}
-              color="primary"
-              href="/dashboard"
-            >
-              Dashboard
-            </NavLink>
-          </Typography>
-        </Link>
-
-        <Link to="/login">
-          <Typography color="primary" align="center" variant="body1">
-            <NavLink
-              underline="none"
-              className={classes.links}
-              color="primary"
-              href="/login"
-            >
-              Login
-            </NavLink>
-          </Typography>
-        </Link>
+        {links.map((link) => {
+          return (
+            <Link to={link.href} key={link.name}>
+              <Typography color="primary" align="center" variant="body1">
+                <NavLink
+                  underline="none"
+                  className={classes.links}
+                  color="primary"
+                  href={link.href}
+                >
+                  {link.name}
+                </NavLink>
+              </Typography>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Link } from "react-router-dom";
 import { Link as NavLink } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+
 import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -14,6 +13,129 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
+import useForm from "./useForm";
+import Input from "./Input";
+
+export default function Login() {
+  const classes = useStyles();
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const isValid = (fieldValues = values) => {
+    const temp = { ...errors };
+    if ("email" in fieldValues)
+      temp.email = /$^|.+@.+..+/.test(fieldValues.email)
+        ? ""
+        : "Please enter a valid email";
+    if ("email" in fieldValues && temp.email === "")
+      temp.email = fieldValues.email ? "" : "This field is required.";
+    if ("password" in fieldValues)
+      temp.password =
+        fieldValues.password.length >= 6
+          ? ""
+          : "Passwords are at least 6 characters";
+
+    setErrors({
+      ...temp,
+    });
+    if (fieldValues === values)
+      // if every value in the array is an empty string, there are no errors, return true
+      return Object.values(temp).every((value) => value === "");
+  };
+  const { values, errors, setErrors, handleInputChange } = useForm(
+    initialValues,
+    true,
+    isValid
+  );
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    if (isValid()) {
+      const { email, password } = values;
+      const body = {
+        email,
+        password,
+      };
+
+      try {
+        const response = await axios.post("/api/login", {
+          body: JSON.stringify(body),
+        });
+        console.log("response", response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} onSubmit={handleLogin}>
+          <Input
+            value={values.email}
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={handleInputChange}
+            error={errors.email}
+          />
+          <Input
+            value={values.password}
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={handleInputChange}
+            error={errors.password}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="/" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to="/signup">
+                <NavLink color="inherit" underline="hover" href="/signup">
+                  Don't have an account? Sign Up
+                </NavLink>
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
+}
 
 function Copyright() {
   return (
@@ -47,108 +169,3 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
-export default function Login() {
-  const classes = useStyles();
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleCredentials = (e) => {
-    e.preventDefault();
-    setCredentials({
-      ...credentials,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  async function handleLogin(e) {
-    e.preventDefault();
-    const { email, password } = credentials;
-    const body = {
-      email,
-      password,
-    };
-
-    try {
-      const response = await axios.post("/api/login", {
-        body: JSON.stringify(body),
-      });
-      console.log("response", response);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={handleCredentials}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleCredentials}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onSubmit={handleLogin}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/signup">
-                <NavLink color="inherit" underline="hover" href="/signup">
-                  Don't have an account? Sign Up
-                </NavLink>
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
-}

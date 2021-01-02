@@ -42,9 +42,13 @@ const useStyles = makeStyles({
 
 export default function MobileNav() {
   const classes = useStyles();
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const menuItems = [
+    { href: "/search", name: "Search" },
+    { href: "/dashboard", name: "Dashboard" },
+    { href: "/login", name: "Login" },
+  ];
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,12 +61,7 @@ export default function MobileNav() {
     <div className={classes.navContainer}>
       <Link to="/">
         <Typography variant="h4" className={classes.harness}>
-          <NavLink
-            underline="none"
-            className={classes.harness}
-            // color="primary"
-            href="/"
-          >
+          <NavLink underline="none" className={classes.harness} href="/">
             HARNESS
           </NavLink>
         </Typography>
@@ -86,7 +85,25 @@ export default function MobileNav() {
         open={open}
         onClick={handleClose}
       >
-        <MenuItem>
+        {menuItems.map((item) => {
+          return (
+            <MenuItem key={item.name}>
+              <Link to={item.href}>
+                <Typography color="primary" align="center" variant="body1">
+                  <NavLink
+                    underline="none"
+                    className={classes.links}
+                    color="primary"
+                    href={item.href}
+                  >
+                    {item.name}
+                  </NavLink>
+                </Typography>
+              </Link>
+            </MenuItem>
+          );
+        })}
+        {/* <MenuItem>
           <Link to="/search">
             <Typography color="primary" align="center" variant="body1">
               <NavLink
@@ -121,13 +138,13 @@ export default function MobileNav() {
                 underline="none"
                 className={classes.links}
                 color="primary"
-                href="/dashboard"
+                href="/login"
               >
                 Login
               </NavLink>
             </Typography>
           </Link>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </div>
   );

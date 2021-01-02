@@ -10,6 +10,7 @@ import Dashboard from "./Dashboard";
 import DashboardTemp from "./DashboardTemp";
 import MobileNav from "./MobileNav";
 import SignUp from "./SignUp";
+import SignUpForm from "./SignUpForm";
 
 const App = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -29,7 +30,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/search" component={Search} />/
           </Switch>
