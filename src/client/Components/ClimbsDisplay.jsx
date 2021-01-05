@@ -6,12 +6,19 @@ import theme from "../UI/theme";
 
 const useStyles = makeStyles({
   root: {
-    backgroundImage: `linear-gradient(#000640 1%, transparent)`,
+    backgroundImage: `linear-gradient(${theme.palette.primary.main} 1%, transparent)`,
+    padding: `${theme.spacing(4)}px`,
+  },
+  item: {
+    padding: `32px`,
   },
 });
+// eslint-disable-next-line react/prop-types
 function ClimbsDisplay(props) {
+  console.log(props);
   const classes = useStyles();
   const climbs = props.routes
+    // eslint-disable-next-line react/prop-types
     .filter((route) => {
       return route.raw.imgMedium !== "";
     })
@@ -21,7 +28,15 @@ function ClimbsDisplay(props) {
       else if (climb.type === "Trad" || "Trad, TR") type = "T";
       else if (climb.type === "Boulder") type = "B";
       return (
-        <Grid key={climb.id} item xs={12} sm={6} md={4}>
+        <Grid
+          key={climb.id}
+          spacing={8}
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          className={classes.item}
+        >
           <ClimbCard
             key={climb.id}
             name={climb.name}
@@ -36,7 +51,7 @@ function ClimbsDisplay(props) {
     });
 
   return (
-    <Grid container justify="center" className={classes.root} spacing={3}>
+    <Grid container justify='center' className={classes.root} spacing={3}>
       {climbs}
     </Grid>
   );

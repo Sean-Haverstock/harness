@@ -10,7 +10,7 @@ import MapWrapper from "./LocationMap";
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundImage: "linear-gradient(to bottom, #000640 10%, #fff 75%)",
+    backgroundImage: `linear-gradient(to top, transparent, ${theme.palette.primary.bgdark})`,
     display: "flex",
     flexDirection: "column",
     height: "40vh",
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   head: {
     fontFamily: "Roboto",
     textAlign: "center",
-    color: "#fff",
+    color: `${theme.palette.primary.main}`,
   },
   formContainer: {
     display: "flex",
@@ -67,7 +67,6 @@ function Search() {
   const [isListView, setView] = useState(true);
   const [grade, setGrade] = useState("5.6");
   const [type, setType] = useState("");
-  const [name, setName] = useState("");
   const classes = useStyles();
   const grades = [
     "5.5",
@@ -97,17 +96,17 @@ function Search() {
     "5.14d",
   ];
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await axios.get("/api/climbs");
-  //       const data = response.data.routes;
-  //       setRoutes(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get("/api/climbs");
+        const data = response.data.routes;
+        setRoutes(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const handleViewChange = (e) => {
     e.preventDefault();
@@ -124,10 +123,10 @@ function Search() {
     setGrade(e.target.value);
   }
 
-  function handleNameChange(e) {
-    e.preventDefault();
-    setName(e.target.value);
-  }
+  // function handleNameChange(e) {
+  //   e.preventDefault();
+  //   setName(e.target.value);
+  // }
 
   function handleFindClimbs(e) {
     e.preventDefault();
@@ -150,52 +149,53 @@ function Search() {
   return (
     <div className={classes.mainContainer}>
       <Container className={classes.header}>
-        <Typography className={classes.head} variant="h4">
+        <Typography className={classes.head} variant='h4'>
           Explore America's Climbing Routes
         </Typography>
-        <TextField
+        {/* Add Route to API */}
+        {/* <TextField
           className={classes.searchField}
-          placeholder="Search climb by name"
+          placeholder='Search climb by name'
           onChange={handleNameChange}
-        />
+        /> */}
       </Container>
       <Container className={classes.formContainer}>
         <form className={classes.form}>
-          <label className={classes.fields} htmlFor="type">
-            <Typography display="inline">Type:</Typography>
+          <Typography className={classes.fields} display='inline'>
+            Type:
+          </Typography>
+
+          <input
+            className={classes.fields}
+            type='radio'
+            id='Trad'
+            name='type'
+            value='Trad'
+            onChange={handleTypeSelection}
+          />
+          <label htmlFor='Trad'>
+            <Typography display='inline'>Trad</Typography>
           </label>
 
           <input
             className={classes.fields}
-            type="radio"
-            id="Trad"
-            name="type"
-            value="Trad"
+            type='radio'
+            id='Sport'
+            name='type'
+            value='Sport'
             onChange={handleTypeSelection}
           />
-          <label htmlFor="Trad">
-            <Typography display="inline">Trad</Typography>
+          <label htmlFor='Sport'>
+            <Typography display='inline'>Sport</Typography>
           </label>
 
-          <input
-            className={classes.fields}
-            type="radio"
-            id="Sport"
-            name="type"
-            value="Sport"
-            onChange={handleTypeSelection}
-          />
-          <label htmlFor="Sport">
-            <Typography display="inline">Sport</Typography>
-          </label>
-
-          <label className={classes.fields} htmlFor="grade">
-            <Typography display="inline">Grade:</Typography>
+          <label className={classes.fields} htmlFor='grade'>
+            <Typography display='inline'>Grade:</Typography>
           </label>
           <select
             className={classes.fields}
-            id="grade"
-            name="type"
+            id='grade'
+            name='type'
             onChange={handleGradeSelection}
           >
             {/* map over array of grades for drop down menu options */}
@@ -209,7 +209,7 @@ function Search() {
           </select>
 
           <button
-            type="submit"
+            type='submit'
             className={classes.fields}
             onClick={handleFindClimbs}
           >
@@ -219,16 +219,16 @@ function Search() {
         <div className={classes.buttonContainer}>
           <button
             className={classes.buttons}
-            type="submit"
-            value="list"
+            type='submit'
+            value='list'
             onClick={handleViewChange}
           >
             List View
           </button>
           <button
             className={classes.buttons}
-            type="submit"
-            value="map"
+            type='submit'
+            value='map'
             onClick={handleViewChange}
           >
             Map View

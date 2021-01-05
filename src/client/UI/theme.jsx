@@ -18,6 +18,7 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: [
       "Roboto",
+      "Rokkit",
       "Permanent Marker",
       "Pacifico",
       "Dancing Script",

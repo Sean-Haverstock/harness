@@ -14,7 +14,7 @@ import { Link as NavLink } from "@material-ui/core";
 import Login from "./Login";
 import useForm from "./useForm";
 import Input from "./Input";
-import Success from "./Success";
+import SuccessModal from "./Success";
 
 export default function SignUp() {
   const classes = useStyles();
@@ -116,108 +116,94 @@ export default function SignUp() {
   };
 
   return isRegistered ? (
-    <Container>
-      <Modal
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        open={modalOpen}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <Success />
-      </Modal>
-    </Container>
+    <SuccessModal open={modalOpen} onClose={handleClose} />
   ) : (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
         {/* <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar> */}
-        <Typography component="h1" variant="h5">
+        <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Input
             value={values.username}
-            id="username"
-            label="Username"
-            name="username"
+            id='username'
+            label='Username'
+            name='username'
             onChange={handleInputChange}
             error={errors.username}
           />
           <Input
             value={values.firstName}
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            autoComplete="firstName"
+            id='firstName'
+            label='First Name'
+            name='firstName'
+            autoComplete='firstName'
             autoFocus
             onChange={handleInputChange}
             error={errors.lastName}
           />
           <Input
             value={values.lastName}
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            autoComplete="lastname"
+            id='lastName'
+            label='Last Name'
+            name='lastName'
+            autoComplete='lastname'
             autoFocus
             onChange={handleInputChange}
             error={errors.lastName}
           />
           <Input
             value={values.email}
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id='email'
+            label='Email Address'
+            name='email'
+            autoComplete='email'
             autoFocus
             onChange={handleInputChange}
             error={errors.email}
           />
           <Input
             value={values.password}
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
             onChange={handleInputChange}
             error={errors.password}
           />
           <Input
             value={values.confirmPassword}
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="confirmPassword"
-            autoComplete="current-password"
+            name='confirmPassword'
+            label='Confirm Password'
+            type='password'
+            id='confirmPassword'
+            autoComplete='current-password'
             onChange={handleInputChange}
             error={errors.password}
           />
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             className={classes.submit}
           >
             Sign Up
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/" variant="body2">
+              <Link href='/' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/login">
-                <NavLink color="inherit" underline="hover" href="/login">
+              <Link to='/login'>
+                <NavLink color='inherit' underline='hover' href='/login'>
                   Already have an account? Sign In
                 </NavLink>
               </Link>
@@ -234,9 +220,9 @@ export default function SignUp() {
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color='inherit' href='https://material-ui.com/'>
         Harness
       </Link>{" "}
       {new Date().getFullYear()}

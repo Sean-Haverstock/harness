@@ -10,6 +10,7 @@ function useForm(initialValues, validateOnChange = false, validate) {
       ...values,
       [name]: value,
     });
+    console.log(values);
   };
 
   const resetForm = () => {

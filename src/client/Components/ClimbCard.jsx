@@ -6,10 +6,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { green, red } from "@material-ui/core/colors";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ShareIcon from "@material-ui/icons/Share";
 import Rating from "@material-ui/lab/Rating";
@@ -36,15 +34,6 @@ const useStyles = makeStyles(() =>
     expandOpen: {
       transform: "rotate(180deg)",
     },
-    S: {
-      backgroundColor: red[500],
-    },
-    T: {
-      backgroundColor: green[500],
-    },
-    B: {
-      backgroundColor: "black",
-    },
   })
 );
 
@@ -69,37 +58,47 @@ function ClimbCard({ name, img, cssType, type, rating, stars }) {
   return (
     <Card className={classes.root}>
       <CardHeader
+        title={<StyledTypography variant='h6'>{name}</StyledTypography>}
         avatar={
-          <Avatar aria-label="recipe" className={classes.T}>
-            {cssType}
-          </Avatar>
+          cssType === "S" ? (
+            <img
+              src='../../public/assets/images/noun_quickdraw_581935.png'
+              alt='Quickdraw'
+              style={{ width: "20px", height: "20px" }}
+            />
+          ) : (
+            <img
+              src='../../public/assets/images/noun_Spring loaded camming device_1567689.png'
+              alt='Cam'
+              style={{ width: "20px", height: "20px" }}
+            />
+          )
         }
-        title={<StyledTypography variant="h6">{name}</StyledTypography>}
       />
       <CardMedia className={classes.media} image={img} title={name} />
       <CardContent>
-        <StyledTypography variant="subtitle2" color="textSecondary">
+        <StyledTypography variant='subtitle2' color='textSecondary'>
           {type}
         </StyledTypography>
-        <StyledTypography variant="subtitle2" color="textSecondary">
+        <StyledTypography variant='subtitle2' color='textSecondary'>
           Rating: {rating}
         </StyledTypography>
         <span>
-          <StyledTypography variant="subtitle2" color="textSecondary">
+          <StyledTypography variant='subtitle2' color='textSecondary'>
             Stars:{" "}
             {stars === 0 ? (
               "not yet rated"
             ) : (
-              <Rating value={stars} size="small" precision={0.5} readOnly />
+              <Rating value={stars} size='small' precision={0.5} readOnly />
             )}
           </StyledTypography>
         </span>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label='add to favorites'>
           <FavoriteBorderIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton aria-label='share'>
           <ShareIcon />
         </IconButton>
         <IconButton
@@ -108,7 +107,7 @@ function ClimbCard({ name, img, cssType, type, rating, stars }) {
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label='show more'
         />
       </CardActions>
     </Card>

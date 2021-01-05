@@ -1,11 +1,9 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Link, Redirect } from "react-router-dom";
 import { Link as NavLink } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -16,7 +14,8 @@ import axios from "axios";
 import useForm from "./useForm";
 import Input from "./Input";
 
-export default function Login() {
+function Login(props) {
+  const { authStatus, setAuthStatus } = props;
   const classes = useStyles();
   const initialValues = {
     email: "",
@@ -60,69 +59,69 @@ export default function Login() {
       };
 
       try {
-        const response = await axios.post("/api/login", {
-          body: JSON.stringify(body),
-        });
-        console.log("response", response);
+        const response = await axios.post("/api/login", body);
+        if (response.status === 200) {
+          setAuthStatus({
+            isAuthenticated: true,
+          });
+        }
       } catch (error) {
         console.log(error);
       }
     }
   }
 
-  return (
-    <Container component="main" maxWidth="xs">
+  return authStatus.isAuthenticated ? (
+    <Redirect to='/dashboard' />
+  ) : (
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
         <form className={classes.form} onSubmit={handleLogin}>
           <Input
             value={values.email}
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id='email'
+            label='Email Address'
+            name='email'
+            autoComplete='email'
             autoFocus
             onChange={handleInputChange}
             error={errors.email}
           />
           <Input
             value={values.password}
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
             onChange={handleInputChange}
             error={errors.password}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             className={classes.submit}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/" variant="body2">
+              <Link href='/' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/signup">
-                <NavLink color="inherit" underline="hover" href="/signup">
+              <Link to='/signup'>
+                <NavLink color='inherit' underline='hover' href='/signup'>
                   Don't have an account? Sign Up
                 </NavLink>
               </Link>
@@ -139,10 +138,10 @@ export default function Login() {
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color='inherit' href='/'>
+        Harness
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -169,3 +168,5 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+export default Login;

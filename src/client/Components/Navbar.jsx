@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { BrowserRouter as Link } from "react-router-dom";
-import { Link as NavLink } from "@material-ui/core";
+import { Link as NavLink, withTheme } from "@material-ui/core";
 
 import theme from "../UI/theme";
 
@@ -43,9 +43,9 @@ export default function NavBar() {
   return (
     <div className={classes.appBar}>
       <div className={classes.navContainer}>
-        <Link to="/">
-          <Typography variant="h4" className={classes.harness}>
-            <NavLink underline="none" className={classes.harness} href="/">
+        <Link to='/'>
+          <Typography variant='h4' className={classes.harness}>
+            <NavLink underline='none' className={classes.harness} href='/'>
               HARNESS
             </NavLink>
           </Typography>
@@ -54,11 +54,11 @@ export default function NavBar() {
         {links.map((link) => {
           return (
             <Link to={link.href} key={link.name}>
-              <Typography color="primary" align="center" variant="body1">
+              <Typography color='primary' align='center' variant='body1'>
                 <NavLink
-                  underline="none"
+                  underline='none'
                   className={classes.links}
-                  color="primary"
+                  color='primary'
                   href={link.href}
                 >
                   {link.name}

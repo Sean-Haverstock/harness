@@ -3,8 +3,20 @@ const model = require("../models/model.js");
 
 const authController = {};
 
+authController.setStatus = async (req, res, next) => {
+  const userPassport = req.user;
+  if (userPassport) {
+    res.locals.status = { isLoggedIn: true };
+    res.locals.user = userPassport.username;
+
+    next();
+  } else {
+    res.locals.status = { isLoggedIn: false };
+    next();
+  }
+};
+
 authController.register = async (req, res, next) => {
-  console.log("in authController", "body", req.body);
   // destructure body object
   const { username, password, email, firstName, lastName } = req.body;
   // 1) search database to see if the email has already been registered

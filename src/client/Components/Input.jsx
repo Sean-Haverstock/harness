@@ -5,8 +5,8 @@ export default function Input(props) {
   const { name, label, value, error = null, onChange, type } = props;
   return (
     <TextField
-      variant="outlined"
-      margin="normal"
+      variant='outlined'
+      margin='normal'
       fullWidth
       id={name}
       label={label}

@@ -9,3 +9,4 @@ assets/
 colors.js
 webpack2.config.js
 NOTES.txt
+.eslintrc

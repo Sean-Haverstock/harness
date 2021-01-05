@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Exercise from "./Exercise";
 import theme from "../UI/theme";
@@ -107,10 +107,10 @@ export default function Dashboard() {
         <Typography>Sidebar</Typography>
       </aside>
 
-      <div className={classes.exerciseContainer} id="exercise">
+      <div className={classes.exerciseContainer} id='exercise'>
         <div className={classes.content}>
           <header className={classes.header}>
-            <Typography variant="h4" color="secondary">
+            <Typography variant='h4' color='secondary'>
               Hello, Sean
             </Typography>
           </header>
@@ -120,7 +120,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className={classes.chartsContainer} id="chart">
+      <div className={classes.chartsContainer} id='chart'>
         <div className={classes.chartContainer}>
           <MaxPullChart />
         </div>

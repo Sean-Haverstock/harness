@@ -15,7 +15,6 @@ const containerStyle = {
   margin: "auto",
   width: "100%",
   height: "100%",
-  // backgroundImage: `linear-gradient(transparent 1%, #000640)`,
 };
 
 const maps_api_key = process.env.REACT_APP_MAPS_API_KEY;
@@ -79,8 +78,8 @@ class MapContainer extends Component {
           }}
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          aria-labelledby='simple-modal-title'
+          aria-describedby='simple-modal-description'
         >
           <ClimbCard
             key={this.state.climb.id}
