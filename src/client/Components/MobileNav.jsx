@@ -1,9 +1,11 @@
 import React from "react";
+import axios from "axios";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import { BrowserRouter as Link } from "react-router-dom";
 import { Link as NavLink } from "@material-ui/core";
@@ -57,6 +59,17 @@ export default function MobileNav() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    console.log('handle logout firing')
+    try {
+      const result = await axios.get('api/logout')
+      console.log('logout', result)
+    } catch(error) {
+      console.log(error)
+    }
+  }
   return (
     <div className={classes.navContainer}>
       <Link to="/">
@@ -103,48 +116,9 @@ export default function MobileNav() {
             </MenuItem>
           );
         })}
-        {/* <MenuItem>
-          <Link to="/search">
-            <Typography color="primary" align="center" variant="body1">
-              <NavLink
-                underline="none"
-                className={classes.links}
-                color="primary"
-                href="/search"
-              >
-                Search
-              </NavLink>
-            </Typography>
-          </Link>
-        </MenuItem>
         <MenuItem>
-          <Link to="/dashboard">
-            <Typography color="primary" align="center" variant="body1">
-              <NavLink
-                underline="none"
-                className={classes.links}
-                color="primary"
-                href="/dashboard"
-              >
-                Dashboard
-              </NavLink>
-            </Typography>
-          </Link>
+          <Button onClick={handleLogout}>Logout</Button>
         </MenuItem>
-        <MenuItem>
-          <Link to="/login">
-            <Typography color="primary" align="center" variant="body1">
-              <NavLink
-                underline="none"
-                className={classes.links}
-                color="primary"
-                href="/login"
-              >
-                Login
-              </NavLink>
-            </Typography>
-          </Link>
-        </MenuItem> */}
       </Menu>
     </div>
   );

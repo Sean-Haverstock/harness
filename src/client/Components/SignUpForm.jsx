@@ -102,10 +102,7 @@ export default function SignUp() {
           const { msg } = serverErrors[error];
           obj[param] = msg;
         }
-        console.log("validation object", obj);
         setErrors(Object.assign(errors, obj));
-
-        // console.log("validation error", validationErrors);
       }
     }
   }

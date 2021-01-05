@@ -13,26 +13,31 @@ const initialize = (passport) => {
           console.log(err, "user credentials error");
           return;
         }
-
-        // find and compare same password
-        if (results.rows.length > 0) {
-          const user = results.rows[0];
+        console.log("results", results);
+        let emailExists = results.rows.length > 0 ? true : false;
+        if (!emailExists) {
+          console.log("email does not exist");
+          return done(null, false, { message: "This email is not registered" });
+        }
+        if (emailExists) {
+          console.log("user TRUE");
 
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err) {
               console.log(err, "bcrypt compare error");
-              return;
+              return done(err);
             }
             // if password matched send user body
             if (isMatch) {
               console.log("match");
               return done(null, user);
+            } else {
+              console.log("Incorrect Password");
+              return done(null, false, {
+                message: "This email is not registered",
+              });
             }
-            console.log("Incorrect Password");
-            return done(null, false, { message: "Incorrect password" });
           });
-        } else {
-          return done(null, false, { message: "This email is not registered" });
         }
       }
     );
@@ -43,6 +48,7 @@ const initialize = (passport) => {
       {
         usernameField: "email",
         passwordField: "password",
+        passReqToCallback: true,
       },
       autheticateUser
     )

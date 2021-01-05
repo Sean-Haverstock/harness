@@ -60,6 +60,7 @@ function Login(props) {
 
       try {
         const response = await axios.post("/api/login", body);
+        console.log('response', response.status)
         if (response.status === 200) {
           setAuthStatus({
             isAuthenticated: true,

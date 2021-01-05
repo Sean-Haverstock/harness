@@ -1,14 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");
 const initializePassport = require("./passport");
-
 initializePassport(passport);
-
+const PORT = 3000;
 const climbsRouter = require("./routes/climbsRouter");
 const signupRouter = require("./routes/signupRouter");
 const loginRouter = require("./routes/loginRouter");
@@ -18,14 +18,11 @@ const app = express();
 // define our app using express
 // configure app to use bodyParser()
 // this will let us get the data from a POST
+app.use(express.static(path.resolve(__dirname, "public")));
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-
-const PORT = 3000;
-
-app.use(express.static(path.resolve(__dirname, "public")));
-// Express session
 app.use(
   session({
     secret: "secret",
@@ -33,17 +30,19 @@ app.use(
     saveUninitialized: false,
   })
 );
-
-// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Connect flash
 app.use(flash());
+
 app.use("/api/login", loginRouter);
 app.use("/api/signup", signupRouter);
 app.use("/api/climbs", climbsRouter);
 app.use("/api/status", statusRouter);
+app.get("/api/logout", (req, res) => {
+  req.session.destroy();
+  req.logout();
+  res.redirect("/");
+});
 
 app.use((err, req, res, next) => {
   console.log("first line of global handler", err.req);
