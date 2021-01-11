@@ -5,7 +5,7 @@ const authController = {};
 
 authController.setStatus = async (req, res, next) => {
   const userPassport = req.user;
-  console.log(req);
+  console.log(req.user);
   if (userPassport) {
     res.locals.status = { isLoggedIn: true };
     res.locals.user = userPassport.username;

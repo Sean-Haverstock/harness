@@ -19,6 +19,7 @@ const useStyles = makeStyles(() =>
       maxWidth: 345,
       backgroundColor: '#f7f7f7',
       margin: 'auto',
+      height: 'auto',
     },
     media: {
       height: 0,

@@ -25,7 +25,6 @@ const App = () => {
     const fetchStatus = async () => {
       try {
         const result = await axios.get('/api/status');
-        console.log('isAuthenticated', result);
         setAuthStatus({
           isAuthenticated: result.data[0].isLoggedIn,
           email: result.data[1],

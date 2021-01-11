@@ -71,7 +71,6 @@ climbsController.searchClimbs = (req, res, next) => {
         message: { err: 'An error occurred' },
       });
     }
-    console.log('results', results.rows);
     res.locals.routes = results.rows;
     return next();
   });

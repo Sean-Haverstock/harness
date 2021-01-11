@@ -13,12 +13,10 @@ const useStyles = makeStyles({
     padding: `32px`,
   },
 });
-// eslint-disable-next-line react/prop-types
-function ClimbsDisplay(props) {
-  console.log(props);
+
+function ClimbsDisplay({ routes }) {
   const classes = useStyles();
-  const climbs = props.routes
-    // eslint-disable-next-line react/prop-types
+  const climbs = routes
     .filter((route) => {
       return route.raw.imgMedium !== '';
     })

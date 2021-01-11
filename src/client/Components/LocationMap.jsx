@@ -81,16 +81,22 @@ class MapContainer extends Component {
           aria-labelledby='simple-modal-title'
           aria-describedby='simple-modal-description'
         >
-          <ClimbCard
-            key={this.state.climb.id}
-            // style={{width: '500px'}}
-            name={this.state.climb.name}
-            img={this.state.climb.raw.imgMedium}
-            cssType={this.state.climb.type}
-            type={this.state.climb.type}
-            rating={this.state.climb.rating}
-            stars={this.state.climb.stars}
-          />
+          <div
+            style={{
+              height: 'auto',
+              width: '345px',
+            }}
+          >
+            <ClimbCard
+              key={this.state.climb.id}
+              name={this.state.climb.name}
+              img={this.state.climb.raw.imgMedium}
+              cssType={this.state.climb.type}
+              type={this.state.climb.type}
+              rating={this.state.climb.rating}
+              stars={this.state.climb.stars}
+            />
+          </div>
         </Modal>
       </Map>
     );

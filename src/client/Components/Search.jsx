@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     backgroundImage: `linear-gradient(to top, transparent, ${theme.palette.primary.bglight})`,
     display: 'flex',
     flexDirection: 'column',
-    height: '40vh',
   },
   header: {
     display: 'flex',
@@ -65,8 +64,8 @@ const useStyles = makeStyles({
 function Search() {
   const [routes, setRoutes] = useState([]);
   const [isListView, setView] = useState(true);
-  const [grade, setGrade] = useState('5.6');
-  const [type, setType] = useState('');
+  const [grade, setGrade] = useState('5.9');
+  const [type, setType] = useState('Trad');
   const [name, setName] = useState('');
   const classes = useStyles();
   const grades = [
@@ -97,7 +96,7 @@ function Search() {
     '5.14c',
     '5.14d',
   ];
-  const typeOptions = ['Trad', 'Sport', 'Boulder', 'Any'];
+  const typeOptions = ['Trad', 'Sport', 'Any'];
 
   useEffect(() => {
     (async () => {
@@ -133,6 +132,7 @@ function Search() {
 
   function handleFindClimbs(e) {
     e.preventDefault();
+    console.log('type, grade, name', type, grade, name);
     axios
       .get(`/api/climbs/search`, {
         params: {
@@ -191,6 +191,7 @@ function Search() {
               className={classes.fields}
               id='grade'
               name='grade'
+              value='5.9'
               onBlur={handleGradeSelection}
             >
               {/* map over array of grades for drop down menu options */}
