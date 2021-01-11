@@ -1,24 +1,24 @@
-import React, { Fragment } from "react";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import theme from "../UI/theme";
+import React, { Fragment } from 'react';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import theme from '../UI/theme';
 
 const useStyles = makeStyles(() =>
   createStyles({
     header: {
-      fontFamily: "Roboto",
+      fontFamily: 'Roboto',
       padding: theme.spacing(1),
     },
     text: {
-      fontFamily: "Roboto",
+      fontFamily: 'Roboto',
       paddingLeft: theme.spacing(1),
     },
     inputsContainer: {
       paddingBottom: theme.spacing(1),
     },
     inputs: {
-      maxWidth: "40px",
+      maxWidth: '40px',
     },
   })
 );
@@ -53,7 +53,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Edge Size:{" "}
+              Edge Size:{' '}
             </Typography>
           </label>
         </Grid>
@@ -73,7 +73,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Finger Position:{" "}
+              Finger Position:{' '}
             </Typography>
           </label>
         </Grid>
@@ -97,7 +97,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Rep 1:{" "}
+              Rep 1:{' '}
             </Typography>
           </label>
         </Grid>
@@ -112,7 +112,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Rep 2:{" "}
+              Rep 2:{' '}
             </Typography>
           </label>
         </Grid>
@@ -127,7 +127,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Rep 3:{" "}
+              Rep 3:{' '}
             </Typography>
           </label>
         </Grid>
@@ -142,7 +142,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Rep 4:{" "}
+              Rep 4:{' '}
             </Typography>
           </label>
         </Grid>
@@ -157,7 +157,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Rep 5:{" "}
+              Rep 5:{' '}
             </Typography>
           </label>
         </Grid>
@@ -172,7 +172,7 @@ export default function Exercise() {
               color='primary'
               display='inline'
             >
-              Bodyweight:{" "}
+              Bodyweight:{' '}
             </Typography>
           </label>
         </Grid>

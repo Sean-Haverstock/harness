@@ -4,6 +4,7 @@
 	"description": "Climbing and Training Site",
 	"main": "server/index.js",
 	"scripts": {
+		"format": "prettier \"/client/*.{js,jsx,html}\" --write",
 		"build": "webpack --mode production",
 		"start": "npm run build && node server/index.js",
 		"client": "webpack-dev-server --mode development --devtool inline-source-map --hot",

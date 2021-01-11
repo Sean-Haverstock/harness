@@ -1,12 +1,12 @@
-const webpack = require("webpack");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const dotenv = require("dotenv");
-const path = require("path");
+const webpack = require('webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const dotenv = require('dotenv');
+const path = require('path');
 
-const outputDirectory = "dist";
+const outputDirectory = 'dist';
 
 const env = dotenv.config().parsed;
 
@@ -15,15 +15,15 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
   return prev;
 }, {});
 
-const isDevelopment = "development";
+const isDevelopment = 'development';
 module.exports = {
-  mode: isDevelopment ? "development" : "production",
-  entry: "./client/index.jsx",
+  mode: isDevelopment ? 'development' : 'production',
+  entry: './client/index.jsx',
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: "./js/[name].bundle.js",
+    filename: './js/[name].bundle.js',
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -31,11 +31,11 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
               plugins: [
                 // ... other plugins
-                isDevelopment && require.resolve("react-refresh/babel"),
+                isDevelopment && require.resolve('react-refresh/babel'),
               ].filter(Boolean),
             },
           },
@@ -45,42 +45,42 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           isDevelopment && {
-            loader: "babel-loader",
-            options: { plugins: ["react-refresh/babel"] },
+            loader: 'babel-loader',
+            options: { plugins: ['react-refresh/babel'] },
           },
           {
-            loader: "awesome-typescript-loader",
+            loader: 'awesome-typescript-loader',
             options: { transpileOnly: true },
           },
         ].filter(Boolean),
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
-        loader: "source-map-loader",
+        loader: 'source-map-loader',
       },
       {
         test: /\.css$/,
         use: [
-          { loader: "style-loader" },
+          { loader: 'style-loader' },
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: "./Less",
-              hmr: process.env.NODE_ENV === "development",
+              publicPath: './Less',
+              hmr: process.env.NODE_ENV === 'development',
             },
           },
-          { loader: "css-loader" },
+          { loader: 'css-loader' },
         ],
       },
       {
         test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000",
+        loader: 'url-loader?limit=100000',
       },
     ],
   },
   resolve: {
-    extensions: ["*", ".ts", ".tsx", ".js", ".jsx", ".json", ".jpg"],
+    extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.jpg'],
   },
   devServer: {
     port: 8050,
@@ -88,18 +88,18 @@ module.exports = {
     open: true,
     historyApiFallback: true,
     proxy: {
-      "/api": "http://localhost:3000",
+      '/api': 'http://localhost:3000',
     },
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: './public/index.html',
     }),
     new webpack.DefinePlugin(envKeys),
     new MiniCssExtractPlugin({
-      filename: "./css/[name].css",
-      chunkFilename: "./css/[id].css",
+      filename: './css/[name].css',
+      chunkFilename: './css/[id].css',
     }),
     // isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),

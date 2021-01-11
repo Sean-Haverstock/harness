@@ -1,34 +1,34 @@
-import React from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { BrowserRouter as Link } from "react-router-dom";
-import { Link as NavLink, withTheme } from "@material-ui/core";
+import React from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { BrowserRouter as Link } from 'react-router-dom';
+import { Link as NavLink, withTheme } from '@material-ui/core';
 
-import theme from "../UI/theme";
+import theme from '../UI/theme';
 
 const useStyles = makeStyles({
   appBar: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   navContainer: {
-    margin: "auto",
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    maxWidth: "1000px",
-    minHeight: "64px",
-    backgroundColor: "white",
+    margin: 'auto',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    maxWidth: '1000px',
+    minHeight: '64px',
+    backgroundColor: 'white',
   },
   harness: {
     flex: 5,
-    fontFamily: "Permanent Marker",
-    fontWeight: "bold",
+    fontFamily: 'Permanent Marker',
+    fontWeight: 'bold',
     color: theme.palette.primary.dark,
-    paddingLeft: "1em",
+    paddingLeft: '1em',
   },
   links: {
     flex: 1,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     marginRight: theme.spacing(2),
   },
 });
@@ -36,9 +36,9 @@ const useStyles = makeStyles({
 export default function NavBar() {
   const classes = useStyles();
   const links = [
-    { href: "/search", name: "Search" },
-    { href: "/dashboard", name: "Dashboard" },
-    { href: "/login", name: "Login" },
+    { href: '/search', name: 'Search' },
+    { href: '/dashboard', name: 'Dashboard' },
+    { href: '/login', name: 'Login' },
   ];
   return (
     <div className={classes.appBar}>

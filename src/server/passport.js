@@ -1,6 +1,6 @@
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
-const model = require("./models/model");
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const model = require('./models/model');
 // to Authenticate with passport
 const initialize = (passport) => {
   const autheticateUser = (email, password, done) => {
@@ -10,33 +10,32 @@ const initialize = (passport) => {
       [email],
       (err, results) => {
         if (err) {
-          console.log(err, "user credentials error");
+          console.log(err, 'user credentials error');
           return;
         }
-        console.log("results", results);
-        let emailExists = results.rows.length > 0 ? true : false;
+        console.log('results', results);
+        const emailExists = results.rows.length > 0;
         if (!emailExists) {
-          console.log("email does not exist");
-          return done(null, false, { message: "This email is not registered" });
+          console.log('email does not exist');
+          return done(null, false, { message: 'This email is not registered' });
         }
         if (emailExists) {
-          console.log("user TRUE");
+          console.log('user TRUE');
 
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err) {
-              console.log(err, "bcrypt compare error");
+              console.log(err, 'bcrypt compare error');
               return done(err);
             }
             // if password matched send user body
             if (isMatch) {
-              console.log("match");
+              console.log('match');
               return done(null, user);
-            } else {
-              console.log("Incorrect Password");
-              return done(null, false, {
-                message: "This email is not registered",
-              });
             }
+            console.log('Incorrect Password');
+            return done(null, false, {
+              message: 'This email is not registered',
+            });
           });
         }
       }
@@ -46,8 +45,8 @@ const initialize = (passport) => {
   passport.use(
     new LocalStrategy(
       {
-        usernameField: "email",
-        passwordField: "password",
+        usernameField: 'email',
+        passwordField: 'password',
         passReqToCallback: true,
       },
       autheticateUser
@@ -63,7 +62,7 @@ const initialize = (passport) => {
       [email],
       (err, results) => {
         if (err) {
-          console.log(err, "deserializeUser error");
+          console.log(err, 'deserializeUser error');
           return;
         }
 

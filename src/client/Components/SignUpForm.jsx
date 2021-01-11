@@ -1,64 +1,68 @@
-import React, { useState } from "react";
-import axios from "axios";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Modal from "@material-ui/core/Modal";
-import { BrowserRouter as Link } from "react-router-dom";
-import { Link as NavLink } from "@material-ui/core";
-import Login from "./Login";
-import useForm from "./useForm";
-import Input from "./Input";
-import SuccessModal from "./Success";
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import Modal from '@material-ui/core/Modal';
+import { BrowserRouter as Link } from 'react-router-dom';
+import { Link as NavLink } from '@material-ui/core';
+import AuthContext from './App';
+import Login from './Login';
+import useForm from './useForm';
+import Input from './Input';
+import SuccessModal from './Success';
 
 export default function SignUp() {
+  const value = useContext(AuthContext);
+  console.log(value);
   const classes = useStyles();
   const [isRegistered, setRegistered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  // const [authenticated, setAuthenticated] = props;
+  // const [authenticated, setAuthenticated] = useState(false);
 
   const initialValues = {
-    username: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-    email: "",
+    username: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    confirmPassword: '',
+    email: '',
   };
 
   const validate = (fieldValues = values) => {
     const temp = { ...errors };
-    if ("username" in fieldValues)
+    if ('username' in fieldValues)
       temp.username =
         fieldValues.username.length >= 6
-          ? ""
-          : "Minimum 6 characters required.";
-    if ("email" in fieldValues)
+          ? ''
+          : 'Minimum 6 characters required.';
+    if ('email' in fieldValues)
       temp.email = /$^|.+@.+..+/.test(fieldValues.email)
-        ? ""
-        : "Please enter a valid email";
-    if ("email" in fieldValues && temp.email === "")
-      temp.email = fieldValues.email ? "" : "This field is required.";
-    if ("password" in fieldValues)
+        ? ''
+        : 'Please enter a valid email';
+    if ('email' in fieldValues && temp.email === '')
+      temp.email = fieldValues.email ? '' : 'This field is required.';
+    if ('password' in fieldValues)
       temp.password =
-        fieldValues.password.length >= 6 ? "" : "Minimum 6 characters.";
-    if ("password" in fieldValues && temp.password === "")
+        fieldValues.password.length >= 6 ? '' : 'Minimum 6 characters.';
+    if ('password' in fieldValues && temp.password === '')
       temp.password =
         fieldValues.password === fieldValues.confirmPassword
-          ? ""
-          : "Passwords do not match.";
+          ? ''
+          : 'Passwords do not match.';
 
     setErrors({
       ...temp,
     });
     if (fieldValues === values)
       // if every value in the array is an empty string, there are no errors, return true
-      return Object.values(temp).every((value) => value === "");
+      return Object.values(temp).every((value) => value === '');
   };
 
   const { values, errors, setErrors, handleInputChange } = useForm(
@@ -89,12 +93,12 @@ export default function SignUp() {
       };
 
       try {
-        const response = await axios.post("api/signup", body);
-        console.log("response", response);
+        const response = await axios.post('api/signup', body);
+        console.log('response', response);
         setRegistered(true);
         setModalOpen(true);
       } catch (error) {
-        console.log("catch error", error.response.data);
+        console.log('catch error', error.response.data);
         const serverErrors = error.response.data;
         const obj = {};
         for (error in serverErrors) {
@@ -118,9 +122,9 @@ export default function SignUp() {
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar> */}
+        <Avatar className={classes.avatar}>
+          <AssignmentIcon />
+        </Avatar>
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
@@ -218,12 +222,12 @@ export default function SignUp() {
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color='inherit' href='https://material-ui.com/'>
         Harness
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -231,16 +235,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {

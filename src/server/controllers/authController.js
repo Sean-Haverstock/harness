@@ -1,10 +1,11 @@
-const bcrypt = require("bcrypt");
-const model = require("../models/model.js");
+const bcrypt = require('bcrypt');
+const model = require('../models/model.js');
 
 const authController = {};
 
 authController.setStatus = async (req, res, next) => {
   const userPassport = req.user;
+  console.log(req);
   if (userPassport) {
     res.locals.status = { isLoggedIn: true };
     res.locals.user = userPassport.username;
@@ -28,7 +29,7 @@ authController.register = async (req, res, next) => {
     if (usernameResponse.rowCount) {
       return res.status(400).json([
         {
-          param: "username",
+          param: 'username',
           msg: `${username} has already been registered`,
         },
       ]);
@@ -38,14 +39,14 @@ authController.register = async (req, res, next) => {
     if (emailResponse.rowCount) {
       return res.status(400).json([
         {
-          param: "email",
+          param: 'email',
           msg: `${email} has already been registered`,
         },
       ]);
     }
     // 2) add user if email has not already been registered
     const addUserQueryText =
-      "INSERT INTO users (username, firstName, lastName, email, password) VALUES($1,$2,$3,$4,$5)";
+      'INSERT INTO users (username, firstName, lastName, email, password) VALUES($1,$2,$3,$4,$5)';
     const hashedPass = await bcrypt.hash(password, 10);
     await model.query(addUserQueryText, [
       username,
@@ -60,7 +61,7 @@ authController.register = async (req, res, next) => {
     return next({
       log: `error occurred at register middleware. error message is: ${err}`,
       status: 400,
-      message: { err: "An error occurred" },
+      message: { err: 'An error occurred' },
     });
   }
 };

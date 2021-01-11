@@ -1,12 +1,12 @@
-import React from "react";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core";
-import ClimbCard from "./ClimbCard";
-import theme from "../UI/theme";
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core';
+import ClimbCard from './ClimbCard';
+import theme from '../UI/theme';
 
 const useStyles = makeStyles({
   root: {
-    backgroundImage: `linear-gradient(${theme.palette.primary.main} 1%, transparent)`,
+    backgroundImage: `linear-gradient(transparent, ${theme.palette.primary.main})`,
     padding: `${theme.spacing(4)}px`,
   },
   item: {
@@ -20,13 +20,13 @@ function ClimbsDisplay(props) {
   const climbs = props.routes
     // eslint-disable-next-line react/prop-types
     .filter((route) => {
-      return route.raw.imgMedium !== "";
+      return route.raw.imgMedium !== '';
     })
     .map((climb) => {
       let type;
-      if (climb.type === "Sport") type = "S";
-      else if (climb.type === "Trad" || "Trad, TR") type = "T";
-      else if (climb.type === "Boulder") type = "B";
+      if (climb.type === 'Sport') type = 'S';
+      else if (climb.type === 'Trad' || 'Trad, TR') type = 'T';
+      else if (climb.type === 'Boulder') type = 'B';
       return (
         <Grid
           key={climb.id}

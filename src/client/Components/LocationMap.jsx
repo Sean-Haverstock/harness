@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
-import Modal from "@material-ui/core/Modal";
-import ClimbCard from "./ClimbCard";
+import React, { Component } from 'react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import Modal from '@material-ui/core/Modal';
+import ClimbCard from './ClimbCard';
 
 const mapStyles = {
-  width: "90%",
-  height: "90vh",
-  margin: "auto",
+  width: '90%',
+  height: '90vh',
+  margin: 'auto',
 };
 const containerStyle = {
-  position: "absolute",
-  display: "flex",
-  alignItems: "center",
-  margin: "auto",
-  width: "100%",
-  height: "100%",
+  position: 'absolute',
+  display: 'flex',
+  alignItems: 'center',
+  margin: 'auto',
+  width: '100%',
+  height: '100%',
 };
 
 const maps_api_key = process.env.REACT_APP_MAPS_API_KEY;
-console.log("API KEY", process.env.NODE_ENV);
+console.log('API KEY', process.env.NODE_ENV);
 
 class MapContainer extends Component {
   constructor(props) {
@@ -72,9 +72,9 @@ class MapContainer extends Component {
         {this.displayMarkers()}
         <Modal
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
           open={this.state.open}
           onClose={this.handleClose}
