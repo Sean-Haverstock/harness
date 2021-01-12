@@ -16,7 +16,7 @@ Currently in development. Clone repo, install dependencies and run in dev mode. 
 
 ### Google Maps API View
  ![](images/MapView.png)
-Alternative view 
+ 
 
 ### Coming Soon: Personalized dashboard to log and track training progress. 
 
