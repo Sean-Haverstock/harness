@@ -1,3 +1,0 @@
-# Harness
-
-## Get Started
